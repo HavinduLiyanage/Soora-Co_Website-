@@ -3,6 +3,7 @@ node_modules/
 .next/
 out/
 *.tsbuildinfo
+.cache/
 
 # Local credentials and provider metadata
 .env*

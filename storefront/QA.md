@@ -44,3 +44,7 @@ This is targeted browser and keyboard QA, not a complete accessibility certifica
 # Vercel preparation verification
 
 31 October 2026. `npm run build:server` (invoked through its Node script) passes compilation, TypeScript and page generation. The generated server manifest exists and its configuration does not enable static export. Initial sandbox attempt hit the same Windows EPERM output-directory error as the earlier export; rerunning the unchanged build outside the sandbox passed. No cloud deployment, backend API, admin authentication, live database or file upload flow was tested: those remain unimplemented. No UI changes were made in this preparation step.
+
+# First Vercel deployment fix
+
+The first cloud build failed during `npm install` with `Invalid Version`. The previous lockfile contained optional platform packages without versions. Regenerated the lockfile from the pinned package manifest in an isolated directory, confirmed Linux SWC/Sharp/TypeScript entries and verified no previously versioned package changed version. A clean `npm ci --ignore-scripts --no-audit --no-fund` completed successfully (32 packages on Windows). Vercel now uses `npm ci` for deterministic installation; the cloud build remains the Linux validation.
