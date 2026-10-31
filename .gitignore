@@ -1,0 +1,22 @@
+# Dependencies and generated build output
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+
+# Local credentials and provider metadata
+.env*
+!.env.example
+.vercel/
+.openai/
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local design review artifacts (production assets live in storefront/public)
+/designs/
+*.tar.gz
+*.log
+.DS_Store
+Thumbs.db

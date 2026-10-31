@@ -1,0 +1,4 @@
+import Link from 'next/link';
+import WholesaleEnquiry from '@/components/wholesale-enquiry';
+export const metadata={title:'Wholesale enquiries'};
+export default function Page(){return <section className="wrap information-page"><div className="breadcrumb"><Link href="/">Home</Link><span>/</span><span>Wholesale</span></div><span className="eyebrow">FOR YOUR NEXT COLLECTION</span><h1>Good watches.<br/>For your business.</h1><p className="lead">Looking for watches for your store or a larger order? Start with the styles and quantities you have in mind.</p><div className="process-strip"><div><span>01</span><h3>Choose your direction</h3><p>Share brands, models or a style you’re looking for.</p></div><div><span>02</span><h3>Discuss the details</h3><p>Confirm available stock, pricing and order terms with the store.</p></div><div><span>03</span><h3>Arrange your order</h3><p>Agree payment and fulfilment directly with Soora & Co.</p></div></div><WholesaleEnquiry/></section>}
