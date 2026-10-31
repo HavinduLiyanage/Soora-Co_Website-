@@ -48,3 +48,14 @@ This is targeted browser and keyboard QA, not a complete accessibility certifica
 # First Vercel deployment fix
 
 The first cloud build failed during `npm install` with `Invalid Version`. The previous lockfile contained optional platform packages without versions. Regenerated the lockfile from the pinned package manifest in an isolated directory, confirmed Linux SWC/Sharp/TypeScript entries and verified no previously versioned package changed version. A clean `npm ci --ignore-scripts --no-audit --no-fund` completed successfully (32 packages on Windows). Vercel now uses `npm ci` for deterministic installation; the cloud build remains the Linux validation.
+
+
+## Owner workspace and backend — 31 October 2026
+
+- Built custom admin with drafts/publishing, variants/stock/prices, scheduled sales, home/deals banners, image uploads, owner authentication and settings.
+- Fourteen automated tests pass, including actual PostgreSQL semantics via PGlite for revision conflicts, audit triggers, published snapshot isolation and archive/unpublish behavior.
+- Thirty integration assertions pass against an isolated PostgreSQL 17 database and the built Next.js server: owner login/logout, anonymous access denial, disabled public signup, origin protection, input validation, draft isolation, stale saves, price/sale publishing, public Deals reads, banner integration, settings conflicts, export, immediate membership revocation and database-backed auth rate limiting.
+- Found and fixed Better Auth endpoint routing with Next trailingSlash, then reran the actual HTTP suite.
+- Production build passes. Local Turbopack required an unsandboxed build to create Windows junctions for sharp; this was an environment permission issue.
+- Desktop and mobile dashboard/editor reviewed; mobile inventory uses stacked rows and search controls preserve their horizontal layout.
+- Hosted Neon connection, real owner onboarding and Vercel Blob upload smoke test remain pending. No private credentials or local QA database are committed.

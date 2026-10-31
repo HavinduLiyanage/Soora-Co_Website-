@@ -1,3 +1,4 @@
+import { brandSlug } from './admin/schema';
 import type { Gender } from './catalog';
 
 export const categories: {slug: string; name: Gender; heading: string; description: string; image: string}[] = [
@@ -11,5 +12,5 @@ export const brandCollections = [
   {slug:'citizen', name:'Citizen', heading:'Discover Citizen.', description:'Explore Citizen watches in the Soora & Co. collection.', image:'/images/dress.png'},
   {slug:'tissot', name:'Tissot', heading:'Discover Tissot.', description:'Explore Tissot watches in the Soora & Co. collection.', image:'/images/leather.png'},
 ];
-export const brandPath = (name: string) => '/brands/' + name.toLowerCase() + '/';
+export const brandPath = (name: string) => '/brands/' + brandSlug(name) + '/';
 export const categoryPath = (name: string) => '/watches/' + name.toLowerCase() + '/';

@@ -14,7 +14,7 @@ export function displayVariant(product: Product, at = new Date(), dealsOnly = fa
   return [...candidates].sort((a, b) => priceOf(a, at).current - priceOf(b, at).current)[0];
 }
 export function isDeal(product: Product, at = new Date()) { return product.variants.some(v => v.stock > 0 && priceOf(v, at).onSale); }
-export function money(minor: number) { return `LKR ${new Intl.NumberFormat('en-LK', {maximumFractionDigits:0}).format(minor / 100)}`; }
+export function money(minor: number) { return `LKR ${new Intl.NumberFormat('en-LK', {minimumFractionDigits:minor%100?2:0,maximumFractionDigits:2}).format(minor / 100)}`; }
 export type Filters = { q?: string; gender?: string; brand?: string; price?: string; sort?: string; available?: boolean; dealsOnly?: boolean };
 export function filterProducts(products: Product[], filters: Filters, at = new Date()) {
   const query = normalizeSearch(filters.q || '');

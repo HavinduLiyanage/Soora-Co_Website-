@@ -6,3 +6,5 @@ out/
 .openai/.local/
 .vercel/
 *.tar.gz
+
+!.env.example

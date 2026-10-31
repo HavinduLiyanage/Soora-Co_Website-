@@ -13,3 +13,5 @@ html{scrollbar-gutter:stable}body:has(dialog[open]){overflow:hidden}.icon-button
 @media(max-width:360px){.product-grid{gap:24px 10px}.product-meta{flex-wrap:wrap;gap:2px 8px}.enquiry-link{font-size:10px}.sort-control select{max-width:145px}.filter-toggle{padding-inline:10px}.gender-tabs a,.gender-tabs button{padding-inline:8px;font-size:10px}}
 @media(max-width:600px){.collection-image{opacity:.85;width:35%;height:48%;object-fit:contain;bottom:4px}}
 .catalog-top h2,.product-name{overflow-wrap:anywhere}
+
+.managed-campaign picture{position:absolute;inset:0}.managed-campaign h1{max-width:800px;white-space:pre-line}.managed-campaign p{white-space:pre-line}.managed-deals{min-height:340px}.managed-deals h1{font-size:clamp(38px,5vw,66px)}

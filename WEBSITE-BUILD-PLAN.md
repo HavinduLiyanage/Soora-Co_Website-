@@ -1,6 +1,6 @@
 # Soora & Co.: website design and build plan
 
-Status: Manrope typography approved and milestones 1–2 frontend implemented for local preview on 31 October 2026. The application uses sample data; confirmed client content, broader launch QA, backend/admin and production launch remain pending. External private preview publication awaits explicit export approval following automatic review rejection. See MILESTONES.md and storefront/QA.md.
+Status: 31 October 2026. Frontend preview deployed to Vercel. The custom owner dashboard, Better Auth, Neon-compatible PostgreSQL schema and Vercel Blob integration are implemented and locally tested. Hosted backend connections and real client content remain pending. See MILESTONES.md and storefront/BACKEND-SETUP.md.
 
 Selected layout reference: Concept 02, Everyday, elevated. Following receipt of the Soora & Co. logo, retain its modern white layout, product photography, visible prices and WhatsApp enquiries, but replace cobalt branding with restrained gold accents and charcoal. Use the approved Manrope typography system below instead of the heavy bold lettering in the initial raster mockups. The ivory/olive concept is not selected. See section 11 for the brand adaptation and proposed wholesale journey.
 
@@ -77,7 +77,7 @@ Frontend review deliverable: a responsive preview with all primary navigation, f
 
 ## 6. Backend recommendation and architecture
 
-Proposed stack: Payload CMS in the Next.js application, managed PostgreSQL for durable records, and supported persistent object storage for uploaded images. Use a compatible Node.js hosting environment; select providers after checking recurring cost, job execution, backup/restore and required runtime support. Keep source, domain and production accounts under client ownership.
+Implemented stack: a custom Next.js owner dashboard, Better Auth, managed PostgreSQL on Neon for durable records, and Vercel Blob for uploaded images. This supersedes the early Payload candidate. Use a compatible Node.js hosting environment; select providers after checking recurring cost, job execution, backup/restore and required runtime support. Keep source, domain and production accounts under client ownership.
 
 Payload supplies an admin foundation, content schemas, authentication and configurable access control, drafts/versioning and preview facilities. We must configure these and implement the watch-specific inventory, pricing, campaign and audit workflows; they are not all turnkey features.
 

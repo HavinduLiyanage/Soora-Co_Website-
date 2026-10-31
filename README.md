@@ -2,7 +2,7 @@
 
 Watch catalog for Soora & Co., with visible prices, brand and category collections, Deals and WhatsApp enquiry preparation. No online checkout.
 
-The Next.js application is in [`storefront/`](storefront/README.md). It currently uses sample inventory and illustrative product images. Live admin, database, uploads and WhatsApp sending are not connected yet.
+The Next.js application is in [`storefront/`](storefront/README.md). It currently uses sample inventory and illustrative product images. The admin/backend is implemented and locally verified; hosted Neon/Blob connections and the real WhatsApp number remain to be configured.
 
 ## Local development
 
@@ -26,6 +26,7 @@ Read the [deployment guide](storefront/VERCEL-DEPLOYMENT.md) for backend archite
 
 - [Milestones](MILESTONES.md)
 - [Build plan](WEBSITE-BUILD-PLAN.md)
+- [Backend setup and owner guide](storefront/BACKEND-SETUP.md)
 - [Verification notes](storefront/QA.md)
 
 Local design-review artifacts are excluded from Git; the images used by the application are included in `storefront/public/`.

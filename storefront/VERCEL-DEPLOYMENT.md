@@ -1,6 +1,6 @@
 # Vercel deployment direction
 
-Updated 31 October 2026. User selected Vercel; the user has supplied the GitHub repository `https://github.com/HavinduLiyanage/Soora-Co_Website-.git`. Vercel project creation is pending. No paid plan, database, storage service or deployment has been provisioned.
+Updated 31 October 2026. Vercel project `soora-co-website` is connected to `https://github.com/HavinduLiyanage/Soora-Co_Website-.git`. The storefront preview is deployed at https://soora-co-website-bice.vercel.app/. No paid plan has been activated. The separate Neon Free project `soora-co` has been created in Singapore (project `frosty-grass-93934439`). Its application connection and image-store setup remain pending.
 
 ## Technical capability and plan eligibility
 
@@ -11,7 +11,7 @@ Hobby has server functionality, but Vercel restricts it to personal, non-commerc
 ## Proposed integrated architecture
 
 - Existing Next.js UI and future backend request handlers: Vercel.
-- Owner dashboard: integrated CMS/admin under `/admin`; Payload is a candidate, subject to testing its supported Next.js/React versions against this project before installation.
+- Owner dashboard: custom integrated workspace under `/admin`, with Better Auth sessions and explicit owner membership. Payload was considered but is not used in this implementation.
 - Inventory, variants, prices, sale dates, staff accounts and content: managed PostgreSQL, provisioned through a provider such as Neon via Vercel Marketplace. Database provider quotas and charges are separate.
 - Uploaded product/banner media: Vercel Blob, with authenticated upload/delete handling and its own usage limits.
 - Customer flow: catalog to WhatsApp deep links; no cart, checkout, stock reservation or stock decrement from enquiry clicks.
@@ -22,9 +22,9 @@ This architecture aims to keep application hosting together in Vercel. PostgreSQ
 
 ## Prepared locally
 
-`npm run build:server` builds in standard Next.js server mode. `vercel.json` selects that command and the Next.js framework. Vercel also enables server mode through its `VERCEL` environment variable. The ordinary local build retains static export for the existing review workflow. Images remain pre-optimized; this change does not enable a new paid image pipeline.
+`npm run build:server` builds in standard Next.js server mode. `vercel.json` selects that command, `npm ci` and the Next.js framework. Static export is no longer used because authentication, admin mutations and current inventory reads require a server. Existing images remain pre-optimized; uploads are converted to WebP before Blob storage.
 
-This is hosting preparation only. Fixture data is still active. Admin login, live database, uploads, write APIs, publishing and live WhatsApp destination are not implemented by this change.
+The backend and admin implementation is documented in `BACKEND-SETUP.md`. Without environment configuration, `/admin` shows setup status and `/admin/preview` provides a read-only fixture preview. `CATALOG_SOURCE=database` explicitly enables published database reads; until then the public storefront keeps its sample inventory.
 
 ## New account setup and deployment sequence
 

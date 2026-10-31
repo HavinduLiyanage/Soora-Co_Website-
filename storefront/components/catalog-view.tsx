@@ -6,12 +6,14 @@ import Link from 'next/link';
 import { catalogUrl, filterProducts, type Product, type Gender } from '@/lib/catalog';
 import { categoryPath } from '@/lib/collections';
 import { ProductCard } from './store';
+import { Campaign } from './campaign';
+import type { Banner } from '@/lib/admin/schema';
 import { WatchImage } from './watch-image';
 
 type Selection = {brand:string; price:string; available:boolean};
-type Props = {products:Product[]; brands:string[]; dealsOnly?:boolean; searchPage?:boolean; fixedGender?:Gender; fixedBrand?:string; intro?:{heading:string; description:string; image:string}};
+type Props = {banner?:Banner;products:Product[]; brands:string[]; dealsOnly?:boolean; searchPage?:boolean; fixedGender?:Gender; fixedBrand?:string; intro?:{heading:string; description:string; image:string}};
 const priceLabels: Record<string,string> = {'under-30000':'Under LKR 30,000','30000-60000':'LKR 30,000–60,000','over-60000':'Over LKR 60,000'};
-export default function CatalogView({products,brands,dealsOnly=false,searchPage=false,fixedGender,fixedBrand,intro}:Props) {
+export default function CatalogView({products,brands,dealsOnly=false,searchPage=false,fixedGender,fixedBrand,intro,banner}:Props) {
   const params=useSearchParams(); const router=useRouter(); const path=usePathname();
   const [q,setQ]=useState(params.get('q')||''); const drawer=useRef<HTMLDialogElement>(null);
   const [now,setNow]=useState(new Date()); const [draft,setDraft]=useState<Selection>({brand:'',price:'',available:false});
@@ -33,10 +35,10 @@ export default function CatalogView({products,brands,dealsOnly=false,searchPage=
   const draftCount=filterProducts(products,{...filters,...draft,brand:fixedBrand||draft.brand},now).length;
   const title=dealsOnly?'Deals':fixedBrand||fixedGender|| (searchPage?'Search':'All watches');
   return <>
-    <section className={'collection-hero'+(dealsOnly?' sale-hero':intro?' curated-hero':'')}>
+    {banner?<Campaign banner={banner}/>:<section className={'collection-hero'+(dealsOnly?' sale-hero':intro?' curated-hero':'')}>
       {dealsOnly&&<WatchImage src="/images/hero.png" alt="" sizes="100vw" priority/>}
       <div className="wrap"><div className="collection-intro"><span className="eyebrow">{dealsOnly?'THE SOORA & CO. EDIT':fixedBrand?'THE BRAND COLLECTION':searchPage?'FIND YOUR FAVOURITE':'FIND SOMETHING THAT FEELS LIKE YOU'}</span><h1>{dealsOnly?<>Good watches.<br/>Better prices.</>:intro?.heading|| (searchPage?'What catches your eye?':'Your next everyday.')}</h1><p>{dealsOnly?'A closer look at our current offers.':intro?.description|| (searchPage?'Search by brand, model, reference or style.':'Explore the collection. Find your kind of time.')}</p></div>{intro&&<WatchImage className="collection-image" src={intro.image} alt="" sizes="(max-width:600px) 35vw, 25vw" priority/>}</div>
-    </section>
+    </section>}
     <section className="wrap catalog-section">
       <div className="breadcrumb"><Link href="/">Home</Link><span>/</span>{fixedBrand&&<><Link href="/brands/">Brands</Link><span>/</span></>}{fixedGender&&<><Link href="/watches/">All watches</Link><span>/</span></>}<span>{title}</span></div>
       <div className="catalog-top"><div><h2>{filters.q?`Results for “${filters.q}”`:dealsOnly?'Current deals':'The collection'}</h2><p role="status">{visible.length} {visible.length===1?'watch':'watches'}</p></div><form className="catalog-search" onSubmit={e=>{e.preventDefault();update({q})}}><Search size={18}/><input aria-label="Search the collection" placeholder="Brand, model or style…" value={q} onChange={e=>setQ(e.target.value)}/><button type="submit" aria-label="Apply search"><ArrowRight size={18}/></button></form></div>
