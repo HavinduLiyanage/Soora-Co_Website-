@@ -6,7 +6,7 @@ Next.js catalog with an authenticated owner dashboard, Neon PostgreSQL and Verce
 
 - 38 client watches, with model-matched product photos, have been imported into Neon and the admin media library.
 - Vercel production database/auth settings and a dedicated public Blob store are configured. The production catalog uses published database records after redeployment.
-- The owner account remains unset at the user’s request; provision it later using the ignored local .env.owner file. WhatsApp is configured to 94777363079, as requested. Authenticated hosted editing/upload verification follows owner provisioning.
+- A temporary owner account is provisioned; credentials are stored only in ignored .env.owner. WhatsApp is configured to 94777363079, as requested. Hosted login, draft creation, price/sale editing and image uploads have been verified.
 - Stock tracking is optional. Keep “Confirm availability on WhatsApp” enabled to publish a watch or run a sale without entering quantities. Sale prices, badges and Deals membership use the active schedule. Quantities are never displayed on the storefront.
 - Existing data remains unchanged when rerunning the starter import. No sample products or fabricated discounts are published.
 - Policies/store contact copy, account recovery and backup handover remain launch tasks.
@@ -32,7 +32,7 @@ This validates all 38 products and their local images, publishes missing records
 
 ## Verification
 
-17 automated tests pass, including sale scheduling without quantities, price formatting, inventory validation, draft isolation, atomic updates, audit records and archival. The server build passes. See QA.md for prior browser and integration checks. Hosted owner login and upload checks must not be claimed complete until a real owner is provisioned.
+17 automated tests pass, including sale scheduling without quantities, price formatting, inventory validation, draft isolation, atomic updates, audit records and archival. The server build passes. See QA.md for prior browser and integration checks. A temporary owner was used to verify hosted login, private draft editing, optional-stock sales and image uploads.
 
 ## Historical design assets
 

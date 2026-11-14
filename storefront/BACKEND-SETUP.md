@@ -20,7 +20,7 @@ Neon automatically wakes idle compute; this differs from restoring a paused Supa
 
 Neon project soora-co (frosty-grass-93934439, Singapore) is connected and migrated. All 38 starter watches are published in the database; their bundled product photos are registered in the media library. The importer uses a non-login audit identity without owner privileges and preserves existing edits on reruns.
 
-Vercel production database/auth variables and the dedicated public soora-co-website-blob store (Singapore) are configured. CATALOG_SOURCE=database activates the published catalog on redeployment. No paid upgrade was selected. Owner credentials intentionally remain unset; provision later using a valid email and 12–128 character password in ignored .env.owner. WhatsApp is configured to 94777363079, as requested. Hosted owner editing and uploads still need end-to-end verification after provisioning.
+Vercel production database/auth variables and the dedicated public soora-co-website-blob store (Singapore) are configured. CATALOG_SOURCE=database activates the published catalog on redeployment. No paid upgrade was selected. A temporary owner account is provisioned; its generated password remains in ignored .env.owner. WhatsApp is configured to 94777363079, as requested. Hosted login, draft creation, price/sale editing and image uploads have been verified.
 
 ## Connect the services
 

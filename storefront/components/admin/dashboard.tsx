@@ -122,6 +122,12 @@ export default function Dashboard({
     [bannerEdit, setBannerEdit] = useState<BannerEdit | null>(null),
     [dirty, setDirty] = useState(false);
   const [passwordBusy, setPasswordBusy] = useState(false);
+  const [uploadCount, setUploadCount] = useState(0);
+  const uploading = uploadCount > 0;
+  const uploadState = (active: boolean) => {
+    setUploadCount(count => Math.max(0, count + (active ? 1 : -1)));
+    if (active) setDirty(true);
+  };
   const editor = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     if (productEdit || bannerEdit) editor.current?.showModal();
@@ -147,6 +153,7 @@ export default function Dashboard({
     (p) => p.status !== "archived" && p.data.variants.some((v) => !v.availabilityUnconfirmed && v.stock <= 1),
   );
   const close = () => {
+    if (busy || uploading) return;
     if (dirty && !window.confirm("Discard your unsaved changes?")) return;
     setProductEdit(null);
     setBannerEdit(null);
@@ -179,14 +186,16 @@ export default function Dashboard({
     setBannerEdit((p) => (p ? { ...p, data: { ...p.data, ...change } } : p));
     setDirty(true);
   };
-  const changeVariant = (index: number, change: Partial<Variant>) =>
-    changeProduct({
-      variants: productEdit!.data.variants.map((v, i) =>
-        i === index ? { ...v, ...change } : v,
-      ),
-    });
+  const changeVariant = (index: number, change: Partial<Variant>) => {
+    setProductEdit(current => current ? {
+      ...current,
+      data: {...current.data, variants: current.data.variants.map((variant, i) =>
+        i === index ? {...variant, ...change} : variant)},
+    } : current);
+    setDirty(true);
+  };
   async function save(action: "save" | "publish" | "unpublish" | "archive") {
-    if (demo || busy) return;
+    if (demo || busy || uploading) return;
     const editing = productEdit || bannerEdit;
     if (!editing) return;
     if (
@@ -820,7 +829,7 @@ export default function Dashboard({
                   inventory and store copy. Search indexing remains disabled
                   until the launch review.
                 </p>
-                <button className="admin-primary" disabled={demo || busy}>
+                <button className="admin-primary" disabled={demo || busy || uploading}>
                   {busy ? "Saving…" : "Save settings"}
                 </button>
               </form>
@@ -947,7 +956,7 @@ export default function Dashboard({
           <button
             className="admin-edit-button"
             aria-label="Close editor"
-            disabled={busy}
+            disabled={busy || uploading}
             onClick={close}
           >
             <X size={23} />
@@ -1088,6 +1097,7 @@ export default function Dashboard({
                     {productEdit.data.variants.length > 1 && (
                       <button
                         aria-label={`Remove variant ${index + 1}`}
+                        disabled={uploading}
                         className="admin-text-link"
                         onClick={() => {
                           if (
@@ -1108,6 +1118,7 @@ export default function Dashboard({
                     )}
                   </div>
                   <ImageField
+                    onUploadState={uploadState}
                     value={variant.image}
                     onChange={(image) => changeVariant(index, { image })}
                     demo={demo}
@@ -1305,6 +1316,7 @@ export default function Dashboard({
                 </label>
               </div>
               <ImageField
+                    onUploadState={uploadState}
                 value={bannerEdit.data.image}
                 onChange={(image) => changeBanner({ image })}
                 demo={demo}
@@ -1313,6 +1325,7 @@ export default function Dashboard({
               <label className="admin-checkbox">
                 <input
                   type="checkbox"
+                  disabled={uploading}
                   checked={!!bannerEdit.data.mobileImage}
                   onChange={(e) =>
                     changeBanner({
@@ -1326,6 +1339,7 @@ export default function Dashboard({
               </label>
               {bannerEdit.data.mobileImage && (
                 <ImageField
+                    onUploadState={uploadState}
                   value={bannerEdit.data.mobileImage}
                   onChange={(mobileImage) => changeBanner({ mobileImage })}
                   demo={demo}
@@ -1427,20 +1441,21 @@ export default function Dashboard({
             </>
           )}
         </div>
+        {uploading && <p role="status" className="admin-note">Please wait for image uploads to finish before saving or closing.</p>}
         <div className="admin-editor-actions">
           <div>
             {(productEdit?.record || bannerEdit?.record) && (
               <>
                 <button
                   className="admin-text-link"
-                  disabled={demo || busy}
+                  disabled={demo || busy || uploading}
                   onClick={() => save("unpublish")}
                 >
                   Unpublish
                 </button>
                 <button
                   className="admin-text-link"
-                  disabled={demo || busy}
+                  disabled={demo || busy || uploading}
                   onClick={() => save("archive")}
                 >
                   Archive
@@ -1450,14 +1465,14 @@ export default function Dashboard({
           </div>
           <button
             className="admin-secondary"
-            disabled={demo || busy}
+            disabled={demo || busy || uploading}
             onClick={() => save("save")}
           >
             Save draft
           </button>
           <button
             className="admin-primary"
-            disabled={demo || busy}
+            disabled={demo || busy || uploading}
             onClick={() => save("publish")}
           >
             {busy ? "Saving…" : "Publish changes"}

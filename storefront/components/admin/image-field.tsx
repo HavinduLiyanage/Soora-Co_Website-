@@ -6,11 +6,13 @@ export default function ImageField({
   value,
   onChange,
   demo,
+  onUploadState,
   label = "Image",
 }: {
   value: string;
   onChange: (v: string) => void;
   demo: boolean;
+  onUploadState: (uploading: boolean) => void;
   label?: string;
 }) {
   const [busy, setBusy] = useState(false),
@@ -34,6 +36,7 @@ export default function ImageField({
                 const file = e.target.files?.[0];
                 if (!file) return;
                 setBusy(true);
+                onUploadState(true);
                 setError("");
                 try {
                   const data = new FormData();
@@ -49,6 +52,7 @@ export default function ImageField({
                   setError(e instanceof Error ? e.message : "Upload failed.");
                 } finally {
                   setBusy(false);
+                  onUploadState(false);
                   e.target.value = "";
                 }
               }}
@@ -57,7 +61,7 @@ export default function ImageField({
           <button
             type="button"
             className="admin-text-link"
-            disabled={demo}
+            disabled={demo || busy}
             onClick={async () => {
               setError("");
               try {
