@@ -7,7 +7,7 @@ const products = JSON.parse(readFileSync(new URL('../lib/inventory.json',import.
 test('client import has 38 unique validated products and no demo records or invented discounts',()=>{
   assert.equal(products.length,38);
   assert.equal(new Set(products.map(p=>p.id)).size,38);
-  for(const p of products){productSchema.parse(p);assert.ok(!p.id.startsWith('DEMO-'));assert.equal(isDeal(p),false);assert.equal(p.variants[0].image,'');assert.equal(p.variants[0].availabilityUnconfirmed,true);}
+  for(const p of products){productSchema.parse(p);assert.ok(!p.id.startsWith('DEMO-'));assert.equal(isDeal(p),false);assert.equal(p.variants[0].image,`/images/products/${p.id.toLowerCase()}.webp`);assert.ok(readFileSync(new URL('../public'+p.variants[0].image,import.meta.url)).length>1000);assert.equal(p.variants[0].availabilityUnconfirmed,true);}
   assert.equal(products[0].variants[0].priceMinor,1795000);
   assert.equal(products[37].variants[0].priceMinor,10000000);
   assert.equal(products[36].id,'EFV-C100D-1AVDF');

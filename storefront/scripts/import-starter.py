@@ -18,6 +18,11 @@ for row in list(sheet.values)[4:]:
         description=f"{brand.title()} {name}. Contact Soora & Co. to confirm availability and full specifications.",
         featured=number in [1,6,33,36], variants=[dict(id=ref.lower(), colour="Not specified", swatch="#bca36b", image="", priceMinor=round(price*100), stock=stock, availabilityUnconfirmed=True)]))
 assert len(products)==38 and len({p['id'] for p in products})==38
+sources_path=Path(__file__).resolve().parents[1]/'lib'/'product-image-sources.json'
+if sources_path.exists():
+    images={entry['model']:entry['local'] for entry in json.loads(sources_path.read_text(encoding='utf-8'))}
+    for product in products:
+        product['variants'][0]['image']=images.get(product['id'],'')
 target=Path(__file__).resolve().parents[1]/'lib'/'inventory.json'
 target.write_text(json.dumps(products,indent=2)+'\n',encoding='utf-8')
 print(f'Exported {len(products)} watches. No costs, competitor prices, or invented sale offers included.')
