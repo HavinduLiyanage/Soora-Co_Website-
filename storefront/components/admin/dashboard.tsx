@@ -59,7 +59,7 @@ const navigation = [
 function newVariant(): Variant {
   return {
     id: crypto.randomUUID(),
-    colour: "Black",
+    colour: "",
     swatch: "#242120",
     image: "",
     priceMinor: 0,
@@ -73,10 +73,10 @@ function newProduct(): Product {
     slug: "",
     brand: "",
     name: "",
-    gender: "Unisex",
-    style: "Everyday",
-    movement: "Quartz",
-    strap: "Stainless steel",
+    gender: "Unspecified",
+    style: "",
+    movement: "",
+    strap: "",
     description: "",
     featured: false,
     variants: [newVariant()],
@@ -975,10 +975,13 @@ export default function Dashboard({
           )}
           {productEdit && (
             <>
+              <p className="admin-note">Examples show the format only and are not saved. Enter the actual watch details; use “Not specified” for unknown specifications.</p>
               <div className="admin-field-grid">
                 <label>
                   Brand
                   <input
+                    aria-label="Brand"
+                    placeholder="e.g. Casio"
                     value={productEdit.data.brand}
                     onChange={(e) => changeProduct({ brand: e.target.value })}
                     maxLength={60}
@@ -995,6 +998,8 @@ export default function Dashboard({
                 <label>
                   Model name
                   <input
+                    aria-label="Model name"
+                    placeholder="e.g. A168WA-3AYDF Vintage Digital Watch"
                     value={productEdit.data.name}
                     onChange={(e) => changeProduct({ name: e.target.value })}
                     maxLength={120}
@@ -1003,16 +1008,20 @@ export default function Dashboard({
                 <label>
                   Product reference
                   <input
+                    aria-label="Product reference"
+                    placeholder="e.g. A168WA-3AYDF"
                     value={productEdit.data.id}
                     onChange={(e) => changeProduct({ id: e.target.value })}
                   />
+                  <small>Use the model/reference printed on the watch or box. Each watch needs a unique reference.</small>
                 </label>
                 <label>
                   Product URL
                   <input
                     value={productEdit.data.slug}
                     disabled={!!productEdit.record}
-                    placeholder="brand-model-name"
+                    aria-label="Product URL"
+                    placeholder="e.g. casio-a168wa-3aydf"
                     onChange={(e) =>
                       changeProduct({
                         slug: e.target.value
@@ -1024,12 +1033,13 @@ export default function Dashboard({
                   <small>
                     {productEdit.record
                       ? "URL stays fixed to preserve shared links."
-                      : "Lowercase words separated by hyphens."}
+                      : "Example: casio-a168wa-3aydf → /watches/casio-a168wa-3aydf/. Use lowercase letters, numbers and hyphens; no full web address."}
                   </small>
                 </label>
                 <label>
                   Category
                   <select
+                    aria-label="Category"
                     value={productEdit.data.gender}
                     onChange={(e) =>
                       changeProduct({
@@ -1041,10 +1051,13 @@ export default function Dashboard({
                       <option key={g}>{g}</option>
                     ))}
                   </select>
+                  <small>Choose Men, Women or Unisex. Leave Unspecified if you are unsure.</small>
                 </label>
                 <label>
                   Style
                   <input
+                    aria-label="Style"
+                    placeholder="e.g. Everyday, Dress, Sport or Digital"
                     value={productEdit.data.style}
                     onChange={(e) => changeProduct({ style: e.target.value })}
                   />
@@ -1052,6 +1065,8 @@ export default function Dashboard({
                 <label>
                   Movement
                   <input
+                    aria-label="Movement"
+                    placeholder="e.g. Quartz, Automatic or Solar"
                     value={productEdit.data.movement}
                     onChange={(e) =>
                       changeProduct({ movement: e.target.value })
@@ -1061,6 +1076,8 @@ export default function Dashboard({
                 <label>
                   Strap
                   <input
+                    aria-label="Strap"
+                    placeholder="e.g. Stainless steel, Leather or Resin"
                     value={productEdit.data.strap}
                     onChange={(e) => changeProduct({ strap: e.target.value })}
                   />
@@ -1070,7 +1087,9 @@ export default function Dashboard({
                 Description
                 <textarea
                   rows={3}
-                  value={productEdit.data.description}
+                  aria-label="Description"
+                    placeholder="e.g. A classic digital watch with a stainless steel bracelet and an easy-to-read display. Add verified features and what makes this model special."
+                    value={productEdit.data.description}
                   onChange={(e) =>
                     changeProduct({ description: e.target.value })
                   }
@@ -1127,7 +1146,9 @@ export default function Dashboard({
                     <label>
                       Dial colour
                       <input
-                        value={variant.colour}
+                        aria-label="Dial colour"
+                    placeholder="e.g. Black, Blue or Champagne"
+                    value={variant.colour}
                         onChange={(e) =>
                           changeVariant(index, { colour: e.target.value })
                         }
@@ -1137,6 +1158,7 @@ export default function Dashboard({
                       Colour swatch
                       <input
                         type="color"
+                        aria-label="Colour swatch"
                         value={variant.swatch}
                         onChange={(e) =>
                           changeVariant(index, { swatch: e.target.value })
@@ -1149,6 +1171,8 @@ export default function Dashboard({
                         type="number"
                         min="0"
                         step="0.01"
+                        aria-label="Regular price (LKR)"
+                        placeholder="e.g. 17950"
                         value={variant.priceMinor / 100}
                         onChange={(e) =>
                           changeVariant(index, {
@@ -1166,6 +1190,8 @@ export default function Dashboard({
                         min="0"
                         step="1"
                         disabled={!!variant.availabilityUnconfirmed}
+                        aria-label="Units in stock (optional, admin only)"
+                        placeholder="e.g. 5"
                         value={variant.stock}
                         onChange={(e) =>
                           changeVariant(index, {
@@ -1175,6 +1201,7 @@ export default function Dashboard({
                       />
                     </label>
                   </div>
+                  <p className="admin-note">Price example: 17950 means LKR 17,950; enter numbers only, without commas or “LKR”. Choose a swatch that matches the dial. Stock example: 5 units — leave stock tracking off if you only confirm availability on WhatsApp.</p>
                   <label className="admin-checkbox"><input type="checkbox" checked={!!variant.availabilityUnconfirmed} onChange={e=>changeVariant(index,{availabilityUnconfirmed:e.target.checked})}/>Confirm availability on WhatsApp (no stock quantity needed)</label>
                   <p className="admin-help">Sales work with this option enabled. Enter a sale price and dates below; quantities stay private.</p>
                   <label className="admin-checkbox">
@@ -1201,12 +1228,15 @@ export default function Dashboard({
                   </label>
                   {variant.sale && (
                     <div className="admin-sale-fields">
+                      <p className="admin-note">Example: regular price 17950 → sale price 14950. Choose the start and end using the date/time picker in Sri Lanka time; for example, 20 Nov 2026 at 09:00 to 27 Nov 2026 at 23:59. The end must be later than the start.</p>
                       <label>
                         Sale price (LKR)
                         <input
                           type="number"
                           min="0"
                           step="0.01"
+                          aria-label="Sale price (LKR)"
+                          placeholder="e.g. 14950"
                           value={variant.sale.priceMinor / 100}
                           onChange={(e) =>
                             changeVariant(index, {

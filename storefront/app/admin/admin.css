@@ -897,7 +897,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 0 18px;
 }
-.admin-sale-fields > label:first-child {
+.admin-sale-fields > label:first-of-type {
   grid-column: 1/-1;
 }
 .admin-sale-fields p {
