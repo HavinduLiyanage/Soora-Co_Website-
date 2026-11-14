@@ -8,12 +8,13 @@ export function priceOf(variant: Variant, at = new Date()) {
   const current = active && sale ? sale.priceMinor : variant.priceMinor;
   return { current, original: variant.priceMinor, onSale: active, discount: active ? Math.round((1 - current / variant.priceMinor) * 100) : 0 };
 }
+export const canEnquire = (variant: Variant) => variant.availabilityUnconfirmed === true || variant.stock > 0;
 export function displayVariant(product: Product, at = new Date(), dealsOnly = false) {
-  const available = product.variants.filter(v => v.stock > 0 && (!dealsOnly || priceOf(v, at).onSale));
+  const available = product.variants.filter(v => canEnquire(v) && (!dealsOnly || priceOf(v, at).onSale));
   const candidates = available.length ? available : product.variants;
   return [...candidates].sort((a, b) => priceOf(a, at).current - priceOf(b, at).current)[0];
 }
-export function isDeal(product: Product, at = new Date()) { return product.variants.some(v => v.stock > 0 && priceOf(v, at).onSale); }
+export function isDeal(product: Product, at = new Date()) { return product.variants.some(v => canEnquire(v) && priceOf(v, at).onSale); }
 export function money(minor: number) { return `LKR ${new Intl.NumberFormat('en-LK', {minimumFractionDigits:minor%100?2:0,maximumFractionDigits:2}).format(minor / 100)}`; }
 export type Filters = { q?: string; gender?: string; brand?: string; price?: string; sort?: string; available?: boolean; dealsOnly?: boolean };
 export function filterProducts(products: Product[], filters: Filters, at = new Date()) {

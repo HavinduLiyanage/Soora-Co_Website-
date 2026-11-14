@@ -1,37 +1,42 @@
 # Soora & Co. storefront and owner workspace
 
-Milestones 1–2: a Next.js App Router / TypeScript storefront with real Manrope font files, approved white/charcoal/gold branding, and structured sample inventory. This is a review build, not a live store.
+Next.js catalog with an authenticated owner dashboard, Neon PostgreSQL and Vercel Blob. Customers enquire through WhatsApp; there is no checkout or payment processing.
+
+## Current status — 14 November 2026
+
+- 38 client watches, with model-matched product photos, have been imported into Neon and the admin media library.
+- Vercel production database/auth settings and a dedicated public Blob store are configured. The production catalog uses published database records after redeployment.
+- The owner account remains unset at the user’s request; provision it later using the ignored local .env.owner file. WhatsApp is configured to 94777363079, as requested. Authenticated hosted editing/upload verification follows owner provisioning.
+- Stock tracking is optional. Keep “Confirm availability on WhatsApp” enabled to publish a watch or run a sale without entering quantities. Sale prices, badges and Deals membership use the active schedule. Quantities are never displayed on the storefront.
+- Existing data remains unchanged when rerunning the starter import. No sample products or fabricated discounts are published.
+- Policies/store contact copy, account recovery and backup handover remain launch tasks.
 
 ## Run
 
 ```sh
 npm ci
 npm run dev
-npm run typecheck
 npm test
-npm run build
+npm run build:server
 ```
 
-The npm scripts call Node directly to avoid Windows command-shim problems with the ampersand in the workspace path. Dependency versions are pinned in package.json and the lockfile. All builds now use the Next.js server runtime for authenticated admin operations and current database reads.
+The npm scripts call Node directly to avoid Windows command-shim issues with the ampersand in the workspace path. See [BACKEND-SETUP.md](BACKEND-SETUP.md) for provisioning and owner workflows. Never commit local environment files or expose server secrets with NEXT_PUBLIC_.
 
-## Included
+## Live data import
 
-- Responsive homepage, catalog, Deals, product details and a basic brand directory.
-- Brand/category/price/stock filters, price sorting, model/brand/reference search and URL-preserved state.
-- Eight fixture products, including sale, unavailable and multi-variant examples.
-- Shared pricing, sale eligibility, variant selection and enquiry formatting in `lib/catalog.ts`.
-- Data boundary in `lib/repository.ts`, with explicit fixture or published PostgreSQL data sources.
-- Native dialogs for search, mobile filters with Apply/Cancel, and enquiry-message previews; keyboard focus and Escape behavior reviewed in representative journeys.
-- Dedicated Men/Women/Unisex and four brand collection pages, a dedicated search page, FAQ, wholesale enquiry composer, draft policy center, About/contact scaffolds and a 404 recovery page.
-- No carts, checkout, customer accounts, invented contact numbers or outbound messaging.
+```sh
+node --env-file=.env.local scripts/import-live-catalog.mjs
+```
 
-## Not yet connected
-
-Neon and Vercel Blob must be connected using [BACKEND-SETUP.md](BACKEND-SETUP.md). The owner admin, authentication, database schema, uploads and scheduled publishing are implemented. Without configuration, the storefront uses fixtures and enquiries remain message previews. Analytics and a real WhatsApp destination are not configured. Sample stock never changes from an enquiry click. All imagery and model descriptions are illustrative, and the sample IDs are explicitly prefixed DEMO. Original business logo artwork is preserved through CSS positioning.
+This validates all 38 products and their local images, publishes missing records in one transaction, registers reusable photos and disables sample labels. Existing records are preserved; conflicting references abort the transaction. A non-login migration identity provides audit attribution and has no owner access. The workbook import and image provenance remain in scripts/import-starter.py and lib/product-image-sources.json.
 
 ## Verification
 
-Fourteen automated tests cover backend draft isolation, publication, audit and revisions in addition to sale boundaries, invalid discounts, stock eligibility, eligible variant selection, combined filters and selected-variant enquiry content. Browser QA and the build results are recorded in `QA.md`.
+17 automated tests pass, including sale scheduling without quantities, price formatting, inventory validation, draft isolation, atomic updates, audit records and archival. The server build passes. See QA.md for prior browser and integration checks. Hosted owner login and upload checks must not be claimed complete until a real owner is provisioned.
+
+## Historical design assets
+
+The following provenance and milestone notes describe the earlier prototype. Its generated watch images and sample catalog are no longer used by the public collection.
 
 ## Asset provenance
 

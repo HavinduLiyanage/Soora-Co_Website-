@@ -7,18 +7,20 @@ Neon automatically wakes idle compute; this differs from restoring a paused Supa
 ## What is implemented
 
 - `/admin/`: connection status or authenticated owner dashboard.
-- `/admin/preview/`: public, explicitly read-only design preview using fixtures. Never loads real admin records.
+- `/admin/preview/`: public, explicitly read-only design preview using the imported catalog snapshot. Never loads real admin records.
 - `/admin/login/`: email/password login. Public signup is disabled. Owner membership is checked server-side on every private request, separately from having a valid session.
-- Products: add/edit variants, integer stock counts, retail prices, scheduled variant sales, category, brand, product references, imagery, featured placement, drafts, publishing, unpublishing and reversible archival.
+- Products: add/edit variants, optional integer stock counts, retail prices, scheduled variant sales, category, brand, product references, imagery, featured placement, drafts, publishing, unpublishing and reversible archival.
 - Banners: home/deals placement, desktop/mobile artwork, live text, alt text, internal links, priority, enabled state and optional schedule.
 - Settings: WhatsApp destination, announcement text/link, sample-content labels, owner password change and content export.
 - Atomic version checks prevent stale forms overwriting another editor. Database triggers audit changes, including previous inventory counts and prices.
 - Public reads use published snapshots only. Saving a draft does not alter the published version. Active sale and banner windows are evaluated on reads; visible pages refresh every minute and on focus. New enquiry dialogs fetch current product data before preparing a message.
 - Uploaded JPEG/PNG/WebP files are decoded, resized, stripped of metadata and stored as WebP. Up to 3 MB per source image and 24 megapixels. Images are public website assets, not private document storage.
 
-## Provisioning status
+## Provisioning status — 14 November 2026
 
-Neon Free project `soora-co` has been created in AWS Singapore: https://console.neon.tech/app/projects/frosty-grass-93934439. No broad Neon CLI access was granted; its sign-in timed out. The next connection uses only this project’s database credentials, entered privately into the ignored `.env.local` file. Owner account details belong in ignored `.env.owner`. Hosted Blob setup and Vercel environment configuration are still pending.
+Neon project soora-co (frosty-grass-93934439, Singapore) is connected and migrated. All 38 starter watches are published in the database; their bundled product photos are registered in the media library. The importer uses a non-login audit identity without owner privileges and preserves existing edits on reruns.
+
+Vercel production database/auth variables and the dedicated public soora-co-website-blob store (Singapore) are configured. CATALOG_SOURCE=database activates the published catalog on redeployment. No paid upgrade was selected. Owner credentials intentionally remain unset; provision later using a valid email and 12–128 character password in ignored .env.owner. WhatsApp is configured to 94777363079, as requested. Hosted owner editing and uploads still need end-to-end verification after provisioning.
 
 ## Connect the services
 
@@ -36,15 +38,15 @@ All schedules are entered as Sri Lanka time (UTC+05:30) and stored as UTC instan
 
 ## Owner workflow
 
-1. **Add a watch** → details → variants/images → stock/prices → Save draft.
+1. **Add a watch** → details → variants/images → prices → Save draft. Stock is optional; keep “Confirm availability on WhatsApp” enabled when quantities are not tracked.
 2. Review the form, then **Publish changes**. All public catalogs and product pages read the published snapshot.
-3. To run a sale, edit the variant, enable its sale, set the lower price and dates, then publish. Deals membership and badges follow automatically.
+3. To run a sale, edit the variant, enable its sale, set the lower price and dates, then publish. Deals membership and badges follow automatically, including when quantities are not tracked.
 4. To change campaign artwork, create or edit a banner, choose placement and priority, check dates and publish.
-5. After completing a WhatsApp sale, update stock and publish. Stock is not linked to a POS system.
+5. After completing a WhatsApp sale, update stock only if tracking it, or unpublish an unavailable watch. Stock is not linked to a POS system.
 6. **Unpublish** removes the public record while retaining the draft. **Archive** hides it from the active collection; it can be republished later. Product URLs are fixed after creation to preserve shared links.
 7. If a save reports a revision conflict, keep a copy of your intended changes, reload the workspace and apply them to the latest record. Stale drafts are not silently merged.
 
-The price displayed in the inventory table reflects the current draft. Its visibility badge indicates whether an older version is published; “Unpublished edits” distinguishes these states. Live-offer counts use published snapshots. Unit totals use current active draft stock.
+The price displayed in the inventory table reflects the current draft. Its visibility badge indicates whether an older version is published; “Unpublished edits” distinguishes these states. Live-offer counts use published snapshots. Unit totals and low-stock alerts exclude variants whose availability is confirmed through WhatsApp.
 
 ## Recovery and handover
 

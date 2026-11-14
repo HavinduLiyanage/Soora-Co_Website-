@@ -64,6 +64,7 @@ function newVariant(): Variant {
     image: "",
     priceMinor: 0,
     stock: 0,
+    availabilityUnconfirmed: true,
   };
 }
 function newProduct(): Product {
@@ -138,12 +139,12 @@ export default function Dashboard({
   const published = products.filter((p) => p.status === "published");
   const units = products
     .filter((p) => p.status !== "archived")
-    .reduce((a, p) => a + p.data.variants.reduce((n, v) => n + v.stock, 0), 0);
+    .reduce((a, p) => a + p.data.variants.reduce((n, v) => n + (v.availabilityUnconfirmed ? 0 : v.stock), 0), 0);
   const deals = published.filter(
     (p) => p.published_data && isDeal(p.published_data),
   );
   const low = products.filter(
-    (p) => p.status !== "archived" && p.data.variants.some((v) => v.stock <= 1),
+    (p) => p.status !== "archived" && p.data.variants.some((v) => !v.availabilityUnconfirmed && v.stock <= 1),
   );
   const close = () => {
     if (dirty && !window.confirm("Discard your unsaved changes?")) return;
@@ -298,7 +299,8 @@ export default function Dashboard({
             {rows.map((record) => {
               const p = record.data,
                 v = displayVariant(p);
-              const stock = p.variants.reduce((a, v) => a + v.stock, 0);
+              const untracked = p.variants.every(v => v.availabilityUnconfirmed);
+              const stock = p.variants.reduce((a, v) => a + (v.availabilityUnconfirmed ? 0 : v.stock), 0);
               return (
                 <tr key={record.id}>
                   <td>
@@ -329,10 +331,10 @@ export default function Dashboard({
                   </td>
                   <td>
                     <span
-                      className={stock <= 1 ? "admin-stock low" : "admin-stock"}
+                      className={!untracked && stock <= 1 ? "admin-stock low" : "admin-stock"}
                     >
                       <i />
-                      {stock} {stock === 1 ? "unit" : "units"}
+                      {untracked ? "Confirm availability" : `${stock} ${stock === 1 ? "unit" : "units"}`}
                     </span>
                   </td>
                   <td>
@@ -368,7 +370,7 @@ export default function Dashboard({
             <p>
               {query
                 ? "Try another name, brand or reference."
-                : "Add a watch, set its price and stock, then publish it."}
+                : "Add a watch, set its price and availability, then publish it."}
             </p>
             <button className="admin-secondary" onClick={() => editProduct()}>
               Add a watch <Plus size={16} />
@@ -594,8 +596,8 @@ export default function Dashboard({
                   <p>
                     Sale prices apply automatically within the scheduled window.
                     All times use <strong>Sri Lanka time (UTC+05:30)</strong>.
-                    Expired offers return to the regular price; sold-out watches
-                    leave Deals.
+                    Expired offers return to the regular price. Quantities are optional;
+                    watches marked unavailable with stock tracking enabled leave Deals.
                   </p>
                 </div>
               )}
@@ -1147,11 +1149,12 @@ export default function Dashboard({
                       />
                     </label>
                     <label>
-                      Units in stock (admin only)
+                      Units in stock (optional, admin only)
                       <input
                         type="number"
                         min="0"
                         step="1"
+                        disabled={!!variant.availabilityUnconfirmed}
                         value={variant.stock}
                         onChange={(e) =>
                           changeVariant(index, {
@@ -1161,7 +1164,8 @@ export default function Dashboard({
                       />
                     </label>
                   </div>
-                  <label className="admin-checkbox"><input type="checkbox" checked={!!variant.availabilityUnconfirmed} onChange={e=>changeVariant(index,{availabilityUnconfirmed:e.target.checked})}/>Ask customers to confirm availability</label>
+                  <label className="admin-checkbox"><input type="checkbox" checked={!!variant.availabilityUnconfirmed} onChange={e=>changeVariant(index,{availabilityUnconfirmed:e.target.checked})}/>Confirm availability on WhatsApp (no stock quantity needed)</label>
+                  <p className="admin-help">Sales work with this option enabled. Enter a sale price and dates below; quantities stay private.</p>
                   <label className="admin-checkbox">
                     <input
                       type="checkbox"

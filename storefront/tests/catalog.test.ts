@@ -27,3 +27,13 @@ test('sale expiry removes products from deals and restores the regular price',()
  assert.equal(filterProducts([product],{dealsOnly:true},expired).length,0);
  assert.equal(priceOf(variant,expired).current,6000000);
 });
+
+test('untracked quantities permit scheduled deals and select the sale variant',()=>{
+ const saleVariant={...variant,stock:0,availabilityUnconfirmed:true};
+ const p={...product,variants:[{...saleVariant,id:'regular',sale:undefined,priceMinor:1000000},saleVariant]};
+ assert.equal(isDeal(p,now),true);
+ assert.equal(displayVariant(p,now,true).id,'black');
+ assert.equal(filterProducts([p],{dealsOnly:true},now).length,1);
+ assert.equal(filterProducts([p],{dealsOnly:true,available:true},now).length,0);
+ assert.equal(isDeal(p,new Date(sale.endsAt)),false);
+});
