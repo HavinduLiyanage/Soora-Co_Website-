@@ -13,6 +13,7 @@ import {
   type Banner,
 } from "../lib/admin/schema.ts";
 import {
+  setAvailability,
   saveContent,
   ContentError,
   type Query,
@@ -335,4 +336,26 @@ test("sale end and sold-out rules stay consistent with the public catalog", () =
     ),
     false,
   );
+});
+
+
+test('quick stock publishes only availability and rejects stale updates', async()=>{
+ const database=new PGlite();
+ try {
+  await database.exec("create table auth_user(id text primary key); insert into auth_user values ('owner-test');");
+  await database.exec(await readFile(new URL('../db/001-store.sql',import.meta.url),'utf8'));
+  const query:Query=async(sql,values)=>database.query(sql,values);
+  const live=await saveContent(query,'products',{action:'publish',data:product},'owner-test');
+  await saveContent(query,'products',{recordId:live.id,expectedVersion:1,action:'save',data:{...product,name:'Private draft name'}},'owner-test');
+  const updated=await setAvailability(query,{recordId:live.id,expectedVersion:2,availability:'out_of_stock'},'owner-test');
+  assert.equal((updated.data as Product).name,'Private draft name');
+  assert.equal((updated.published_data as Product).name,product.name);
+  assert.equal((updated.published_data as Product).variants[0].availability,'out_of_stock');
+  assert.equal((updated.data as Product).variants[0].availability,'out_of_stock');
+  await assert.rejects(()=>setAvailability(query,{recordId:live.id,expectedVersion:2,availability:'in_stock'},'owner-test'),(e)=>e instanceof ContentError && e.status===409);
+  const draft=await saveContent(query,'products',{recordId:live.id,expectedVersion:3,action:'unpublish',data:updated.data},'owner-test');
+  const toggled=await setAvailability(query,{recordId:live.id,expectedVersion:draft.version,availability:'in_stock'},'owner-test');
+  assert.equal(toggled.published_data,null);
+  assert.equal(toggled.status,'draft');
+ } finally {await database.close()}
 });

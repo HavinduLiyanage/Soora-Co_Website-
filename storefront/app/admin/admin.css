@@ -1535,3 +1535,9 @@
 .admin-stock-options .out_of_stock[aria-pressed=true]{border-color:#9c6464;background:#f7eeee;color:#884646}
 .admin-stock-options button:focus-visible{outline:2px solid #a7862e;outline-offset:3px}
 .admin-availability small{display:block;margin-top:8px;color:#705a2e;font-size:12px;line-height:1.5}
+
+.admin-quick-stock{display:flex;gap:4px;flex-wrap:wrap;min-width:170px;max-width:210px;margin-top:8px}
+.admin-quick-stock button{border:1px solid #ded9cd;border-radius:4px;background:white;padding:7px 9px;font:inherit;font-size:11px;cursor:pointer}
+.admin-quick-stock button[aria-pressed=true]{background:#282722;color:white;border-color:#282722}
+.admin-quick-stock button:disabled{opacity:.5;cursor:default}.admin-quick-stock small{flex-basis:100%;font-size:10px}
+.admin-quick-stock button:focus-visible{outline:2px solid #a7862e;outline-offset:2px}

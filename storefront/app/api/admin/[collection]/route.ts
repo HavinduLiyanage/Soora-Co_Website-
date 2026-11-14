@@ -1,5 +1,6 @@
 import { requireOwner, json, failure, HttpError } from "@/lib/server/http";
 import {
+  setAvailability,
   contentList,
   saveContent,
   type Collection,
@@ -50,4 +51,16 @@ export async function POST(
   } catch (error) {
     return failure(error);
   }
+}
+
+export async function PATCH(request: Request, context: {params: Promise<{collection:string}>}) {
+  try {
+    const owner = await requireOwner(request);
+    if (collection((await context.params).collection) !== 'products') throw new HttpError(404, 'Collection not found.');
+    const body = await request.text();
+    if(body.length > 2000) throw new HttpError(413, 'Request too large.');
+    let value: unknown;
+    try {value=JSON.parse(body)} catch {throw new HttpError(400,'Invalid request.')}
+    return json(await setAvailability(value,owner.id));
+  } catch(error) {return failure(error)}
 }

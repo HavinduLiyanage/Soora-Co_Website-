@@ -1,3 +1,5 @@
+import { z } from "zod";
+const availabilityCommand = z.object({recordId:z.uuid(),expectedVersion:z.number().int().positive(),availability:z.enum(["in_stock","out_of_stock"])}).strict();
 import {
   productSchema,
   bannerSchema,
@@ -83,5 +85,25 @@ export async function saveContent(
       409,
       "This record changed in another session, or its URL was changed. Reload the record before saving. Your draft remains in this form.",
     );
+  return rows[0];
+}
+
+
+// Change only availability in both snapshots; never publish unrelated draft edits.
+export async function setAvailability(query: Query, input: unknown, actor: string) {
+  const parsed = availabilityCommand.safeParse(input);
+  if (!parsed.success) throw new ContentError(400, 'Choose a valid watch and stock status.');
+  const { recordId, expectedVersion, availability } = parsed.data;
+  const patch = JSON.stringify({ availability, availabilityUnconfirmed: false });
+  const { rows } = await query(
+    `update store_products set
+      data=jsonb_set(data,'{variants}',(select jsonb_agg(v || $1::jsonb order by n) from jsonb_array_elements(data->'variants') with ordinality as x(v,n))),
+      published_data=case when published_data is null then null else jsonb_set(published_data,'{variants}',(select jsonb_agg(v || $1::jsonb order by n) from jsonb_array_elements(published_data->'variants') with ordinality as x(v,n))) end,
+      version=version+1,updated_at=now(),updated_by=$2
+    where id=$3 and version=$4 and status <> 'archived'
+    returning id,data,published_data,status,version,updated_at`,
+    [patch,actor,recordId,expectedVersion],
+  );
+  if (!rows.length) throw new ContentError(409, 'This watch changed in another session or is archived. Refresh the inventory and try again.');
   return rows[0];
 }

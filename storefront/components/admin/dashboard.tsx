@@ -255,6 +255,18 @@ export default function Dashboard({
       setBusy(false);
     }
   }
+  async function quickStock(record: ContentRecord<Product>, availability: "in_stock" | "out_of_stock") {
+    if (busy || demo) return;
+    setBusy(true); setError(""); setNotice("");
+    try {
+      const response = await fetch('/api/admin/products/', {method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({recordId:record.id,expectedVersion:record.version,availability})});
+      const updated=await response.json();
+      if(!response.ok) throw new Error(updated.error);
+      setProducts(list=>list.map(p=>p.id===updated.id?updated:p));
+      setNotice(record.data.name + ': ' + (availability==='in_stock'?'In stock':'Out of stock') + (record.status==='published'?'. Updated on the storefront.':'. Draft updated.'));
+    } catch(e) {setError(e instanceof Error?e.message:'Unable to update availability.');}
+    finally {setBusy(false);}
+  }
   const signOut = async () => {
     try {
       const r = await fetch("/api/auth/sign-out", {
@@ -340,6 +352,10 @@ export default function Dashboard({
                   </td>
                   <td>
                     <StockChip variant={stockVariant} />
+                    {record.status !== "archived" && <div className="admin-quick-stock" role="group" aria-label={"Stock for " + p.name}>
+                      {(["in_stock", "out_of_stock"] as const).map(value=><button key={value} type="button" disabled={busy || demo} aria-pressed={p.variants.every(v=>stockStatus(v)===value)} onClick={()=>quickStock(record,value)}>{value==='in_stock'?'In stock':'Out of stock'}</button>)}
+                      <small>{p.variants.length>1?'All variants · ':''}{record.status==='published'?'Updates live':'Draft only'}</small>
+                    </div>}
                   </td>
                   <td>
                     <span className={"admin-pill " + record.status}>

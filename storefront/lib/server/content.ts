@@ -1,6 +1,7 @@
 import "server-only";
 import { db } from "./db";
 import {
+  setAvailability as setStock,
   contentList as list,
   saveContent as save,
   type Collection,
@@ -13,3 +14,6 @@ export const saveContent = (
   input: unknown,
   actor: string,
 ) => save((sql, values) => db().query(sql, values), collection, input, actor);
+
+export const setAvailability = (input: unknown, actor: string) =>
+  setStock((sql, values) => db().query(sql, values), input, actor);
