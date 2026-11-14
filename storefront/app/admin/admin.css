@@ -1525,3 +1525,13 @@
     font-size: 14px !important;
   }
 }
+
+.admin-availability{border:0;margin:0;padding:0;min-width:0}
+.admin-availability legend{font-size:13px;margin-bottom:10px;color:var(--muted)}
+.admin-stock-options{display:flex;gap:8px;flex-wrap:wrap}
+.admin-stock-options button{display:inline-flex;align-items:center;justify-content:center;gap:7px;flex:1;min-height:48px;padding:10px 12px;border:1px solid #ded9cd;border-radius:4px;background:#fff;color:#655e53;font:inherit;font-size:13px;cursor:pointer}
+.admin-stock-options button>span{width:6px;height:6px;border-radius:50%;background:currentColor}
+.admin-stock-options .in_stock[aria-pressed=true]{border-color:#47694a;background:#edf4ee;color:#315c3a}
+.admin-stock-options .out_of_stock[aria-pressed=true]{border-color:#9c6464;background:#f7eeee;color:#884646}
+.admin-stock-options button:focus-visible{outline:2px solid #a7862e;outline-offset:3px}
+.admin-availability small{display:block;margin-top:8px;color:#705a2e;font-size:12px;line-height:1.5}

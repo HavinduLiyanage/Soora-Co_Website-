@@ -21,6 +21,8 @@ import {
 } from "lucide-react";
 import {
   displayVariant,
+  isInStock,
+  stockStatus,
   isDeal,
   money,
   priceOf,
@@ -37,6 +39,7 @@ import {
   type StoreSettings,
   type ContentRecord,
 } from "@/lib/admin/schema";
+import { StockChip } from "../stock-chip";
 import ImageField from "./image-field";
 import { WatchImage } from "../watch-image";
 
@@ -64,7 +67,7 @@ function newVariant(): Variant {
     image: "",
     priceMinor: 0,
     stock: 0,
-    availabilityUnconfirmed: true,
+    availability: "out_of_stock",
   };
 }
 function newProduct(): Product {
@@ -143,14 +146,12 @@ export default function Dashboard({
     return () => window.removeEventListener("beforeunload", warn);
   }, [dirty]);
   const published = products.filter((p) => p.status === "published");
-  const units = products
-    .filter((p) => p.status !== "archived")
-    .reduce((a, p) => a + p.data.variants.reduce((n, v) => n + (v.availabilityUnconfirmed ? 0 : v.stock), 0), 0);
+  const inStock = products.filter(p => p.status !== "archived" && p.data.variants.some(isInStock));
   const deals = published.filter(
     (p) => p.published_data && isDeal(p.published_data),
   );
   const low = products.filter(
-    (p) => p.status !== "archived" && p.data.variants.some((v) => !v.availabilityUnconfirmed && v.stock <= 1),
+    (p) => p.status !== "archived" && p.data.variants.some((v) => !isInStock(v)),
   );
   const close = () => {
     if (busy || uploading) return;
@@ -308,8 +309,7 @@ export default function Dashboard({
             {rows.map((record) => {
               const p = record.data,
                 v = displayVariant(p);
-              const untracked = p.variants.every(v => v.availabilityUnconfirmed);
-              const stock = p.variants.reduce((a, v) => a + (v.availabilityUnconfirmed ? 0 : v.stock), 0);
+              const stockVariant = p.variants.find(isInStock) ?? p.variants.find(v => stockStatus(v) === "unconfirmed") ?? v;
               return (
                 <tr key={record.id}>
                   <td>
@@ -339,12 +339,7 @@ export default function Dashboard({
                     )}
                   </td>
                   <td>
-                    <span
-                      className={!untracked && stock <= 1 ? "admin-stock low" : "admin-stock"}
-                    >
-                      <i />
-                      {untracked ? "Confirm availability" : `${stock} ${stock === 1 ? "unit" : "units"}`}
-                    </span>
+                    <StockChip variant={stockVariant} />
                   </td>
                   <td>
                     <span className={"admin-pill " + record.status}>
@@ -524,8 +519,8 @@ export default function Dashboard({
                     icon: Watch,
                   },
                   {
-                    label: "Available units",
-                    value: units,
+                    label: "In-stock watches",
+                    value: inStock.length,
                     note: "Across your active inventory",
                     icon: PackageCheck,
                   },
@@ -538,7 +533,7 @@ export default function Dashboard({
                   {
                     label: "Stock to review",
                     value: low.length,
-                    note: "Watches with a variant at 0–1 units",
+                    note: "Watches with out-of-stock or unconfirmed variants",
                     icon: LayoutDashboard,
                   },
                 ].map((s) => (
@@ -590,8 +585,8 @@ export default function Dashboard({
                   <strong>Prepare. Preview. Publish.</strong>
                   <p>
                     Draft changes stay private until you publish. WhatsApp
-                    enquiries never reserve or deduct stock—record completed
-                    sales in Inventory.
+                    enquiries never change availability—update the stock status
+                    in Inventory after a confirmed sale.
                   </p>
                 </div>
               </section>
@@ -605,8 +600,8 @@ export default function Dashboard({
                   <p>
                     Sale prices apply automatically within the scheduled window.
                     All times use <strong>Sri Lanka time (UTC+05:30)</strong>.
-                    Expired offers return to the regular price. Quantities are optional;
-                    watches marked unavailable with stock tracking enabled leave Deals.
+                    Expired offers return to the regular price. No quantities are needed;
+                    watches marked out of stock leave Deals.
                   </p>
                 </div>
               )}
@@ -639,7 +634,7 @@ export default function Dashboard({
                   <span>
                     {tab === "sales"
                       ? "Includes active, scheduled and ended offers. Edit a watch to change its sale."
-                      : "Stock is managed manually after a confirmed sale."}
+                      : "Update availability after a confirmed sale, then publish changes."}
                   </span>
                 </div>
               </section>
@@ -1183,27 +1178,22 @@ export default function Dashboard({
                         }
                       />
                     </label>
-                    <label>
-                      Units in stock (optional, admin only)
-                      <input
-                        type="number"
-                        min="0"
-                        step="1"
-                        disabled={!!variant.availabilityUnconfirmed}
-                        aria-label="Units in stock (optional, admin only)"
-                        placeholder="e.g. 5"
-                        value={variant.stock}
-                        onChange={(e) =>
-                          changeVariant(index, {
-                            stock: Number(e.target.value),
-                          })
-                        }
-                      />
-                    </label>
+                    <fieldset className="admin-availability">
+                      <legend>Availability</legend>
+                      <div className="admin-stock-options">
+                        {(["in_stock", "out_of_stock"] as const).map(status => <button
+                          type="button"
+                          key={status}
+                          className={status}
+                          aria-pressed={stockStatus(variant) === status}
+                          onClick={() => changeVariant(index, { availability: status, availabilityUnconfirmed: false })}
+                        ><span aria-hidden="true" />{status === "in_stock" ? "In stock" : "Out of stock"}</button>)}
+                      </div>
+                      {stockStatus(variant) === "unconfirmed" && <small>Not set yet. Choose a stock status for this watch.</small>}
+                    </fieldset>
                   </div>
-                  <p className="admin-note">Price example: 17950 means LKR 17,950; enter numbers only, without commas or “LKR”. Choose a swatch that matches the dial. Stock example: 5 units — leave stock tracking off if you only confirm availability on WhatsApp.</p>
-                  <label className="admin-checkbox"><input type="checkbox" checked={!!variant.availabilityUnconfirmed} onChange={e=>changeVariant(index,{availabilityUnconfirmed:e.target.checked})}/>Confirm availability on WhatsApp (no stock quantity needed)</label>
-                  <p className="admin-help">Sales work with this option enabled. Enter a sale price and dates below; quantities stay private.</p>
+                  <p className="admin-note">Price example: 17950 means LKR 17,950; enter numbers only, without commas or “LKR”. Choose a swatch that matches the dial.</p>
+                  <p className="admin-help">No quantity needed. Publish changes to update the customer’s stock chip. In-stock watches can appear in Deals; out-of-stock watches offer a restocking enquiry.</p>
                   <label className="admin-checkbox">
                     <input
                       type="checkbox"

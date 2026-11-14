@@ -1,6 +1,6 @@
 export type Gender = 'Men' | 'Women' | 'Unisex' | 'Unspecified';
 export type Sale = { priceMinor: number; startsAt: string; endsAt: string };
-export type Variant = { id: string; colour: string; swatch: string; image: string; priceMinor: number; stock: number; availabilityUnconfirmed?: boolean; sale?: Sale };
+export type Variant = { id: string; colour: string; swatch: string; image: string; priceMinor: number; stock: number; availability?: 'in_stock' | 'out_of_stock'; availabilityUnconfirmed?: boolean; sale?: Sale };
 export type Product = { id: string; slug: string; brand: string; name: string; gender: Gender; style: string; movement: string; strap: string; description: string; variants: Variant[]; featured?: boolean };
 export function priceOf(variant: Variant, at = new Date()) {
   const sale = variant.sale;
@@ -8,7 +8,12 @@ export function priceOf(variant: Variant, at = new Date()) {
   const current = active && sale ? sale.priceMinor : variant.priceMinor;
   return { current, original: variant.priceMinor, onSale: active, discount: active ? Math.round((1 - current / variant.priceMinor) * 100) : 0 };
 }
-export const canEnquire = (variant: Variant) => variant.availabilityUnconfirmed === true || variant.stock > 0;
+// Explicit owner status takes precedence over legacy quantity/unconfirmed fields.
+export function stockStatus(variant: Variant): 'in_stock' | 'out_of_stock' | 'unconfirmed' {
+  return variant.availability ?? (variant.availabilityUnconfirmed ? 'unconfirmed' : variant.stock > 0 ? 'in_stock' : 'out_of_stock');
+}
+export const isInStock = (variant: Variant) => stockStatus(variant) === 'in_stock';
+export const canEnquire = (variant: Variant) => stockStatus(variant) !== 'out_of_stock';
 export function displayVariant(product: Product, at = new Date(), dealsOnly = false) {
   const available = product.variants.filter(v => canEnquire(v) && (!dealsOnly || priceOf(v, at).onSale));
   const candidates = available.length ? available : product.variants;
@@ -25,7 +30,7 @@ export function filterProducts(products: Product[], filters: Filters, at = new D
     if (filters.gender && p.gender !== filters.gender) return false;
     if (filters.brand && p.brand !== filters.brand) return false;
     if (filters.dealsOnly && !isDeal(p, at)) return false;
-    if (filters.available && !p.variants.some(v => v.stock > 0)) return false;
+    if (filters.available && !p.variants.some(isInStock)) return false;
     const price = priceOf(displayVariant(p, at, filters.dealsOnly), at).current;
     if (filters.price === 'under-30000' && price >= 3000000) return false;
     if (filters.price === '30000-60000' && (price < 3000000 || price > 6000000)) return false;
@@ -53,5 +58,5 @@ export function catalogUrl(path: string, values: Record<string, string | boolean
   return path + (params.size ? '?' + params.toString() : '');
 }
 export function enquiryMessage(product: Product, variant: Variant, origin: string, at = new Date()) {
-  return `Hi Soora & Co., ${variant.availabilityUnconfirmed || variant.stock > 0 ? "I'm interested in" : "I'd like to ask about restocking"} the ${product.brand} ${product.name}.\nReference: ${product.id}\nDial: ${variant.colour}\nDisplayed price: ${money(priceOf(variant, at).current)}\n${origin}/watches/${product.slug}/\nCould you confirm availability and details?`;
+  return `Hi Soora & Co., ${canEnquire(variant) ? "I'm interested in" : "I'd like to ask about restocking"} the ${product.brand} ${product.name}.\nReference: ${product.id}\nDial: ${variant.colour}\nDisplayed price: ${money(priceOf(variant, at).current)}\n${origin}/watches/${product.slug}/\nCould you confirm availability and details?`;
 }

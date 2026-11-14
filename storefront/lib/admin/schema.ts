@@ -38,6 +38,7 @@ export const variantSchema = z
     swatch: z.string().regex(/^#[a-fA-F0-9]{6}$/),
     image: imageSchema.or(z.literal("")),
     priceMinor: money,
+    availability: z.enum(["in_stock", "out_of_stock"]).optional(),
     availabilityUnconfirmed: z.boolean().optional(),
     stock: z.number().int().min(0).max(1_000_000),
     sale: saleSchema.optional(),

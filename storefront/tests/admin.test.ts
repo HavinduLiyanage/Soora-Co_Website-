@@ -59,6 +59,7 @@ const banner: Banner = {
 test("invalid inventory, price, dates and duplicate variants cannot be saved", () => {
   assert.equal(productSchema.safeParse(product).success, true);
   for (const change of [
+    { availability: "invalid" },
     { stock: -1 },
     { stock: 1.5 },
     { priceMinor: NaN },
@@ -200,7 +201,7 @@ test("PostgreSQL publication, atomic revisions, audit and archival work end to e
     assert.equal((await visible()).rows.length, 1);
     const edited = {
       ...product,
-      variants: [{ ...product.variants[0], priceMinor: 150000 }],
+      variants: [{ ...product.variants[0], priceMinor: 150000, stock: 0, availability: "out_of_stock" as const }],
     };
     const saved = await saveContent(
       query,
@@ -213,6 +214,8 @@ test("PostgreSQL publication, atomic revisions, audit and archival work end to e
       100000,
     );
     assert.equal((saved.data as Product).variants[0].priceMinor, 150000);
+    assert.equal((saved.data as Product).variants[0].availability, "out_of_stock");
+    assert.equal((saved.published_data as Product).variants[0].availability, undefined);
     await assert.rejects(
       () =>
         saveContent(
@@ -243,6 +246,7 @@ test("PostgreSQL publication, atomic revisions, audit and archival work end to e
       (promoted.published_data as Product).variants[0].priceMinor,
       150000,
     );
+    assert.equal((promoted.published_data as Product).variants[0].availability, "out_of_stock");
     await assert.rejects(
       () =>
         saveContent(

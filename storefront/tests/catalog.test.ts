@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { priceOf, isDeal, displayVariant, filterProducts, enquiryMessage, type Product, type Variant } from '../lib/catalog.ts';
+import { stockStatus, isInStock, canEnquire, priceOf, isDeal, displayVariant, filterProducts, enquiryMessage, type Product, type Variant } from '../lib/catalog.ts';
 const sale = {priceMinor:4800000,startsAt:'2026-10-01T00:00:00Z',endsAt:'2026-11-01T00:00:00Z'};
 const variant: Variant = {id:'black',colour:'Black',swatch:'#000',image:'sample.png',priceMinor:6000000,stock:2,sale};
 const product: Product = {id:'S01',slug:'sport',brand:'Seiko',name:'Sport',gender:'Men',style:'Sport',movement:'Automatic',strap:'Steel',description:'Sample',variants:[variant]};
@@ -36,4 +36,30 @@ test('untracked quantities permit scheduled deals and select the sale variant',(
  assert.equal(filterProducts([p],{dealsOnly:true},now).length,1);
  assert.equal(filterProducts([p],{dealsOnly:true,available:true},now).length,0);
  assert.equal(isDeal(p,new Date(sale.endsAt)),false);
+});
+
+
+test('explicit in-stock status enables sales and availability filters without quantities',()=>{
+ const v:Variant={...variant,stock:0,availability:'in_stock',availabilityUnconfirmed:true};
+ const p={...product,variants:[v]};
+ assert.equal(stockStatus(v),'in_stock');
+ assert.equal(isInStock(v),true);
+ assert.equal(isDeal(p,now),true);
+ assert.equal(filterProducts([p],{available:true,dealsOnly:true},now).length,1);
+ assert.doesNotMatch(enquiryMessage(p,v,'https://example.test',now),/restocking/);
+});
+test('explicit out-of-stock status overrides old quantities and changes enquiries',()=>{
+ const v:Variant={...variant,stock:20,availability:'out_of_stock',availabilityUnconfirmed:true};
+ const p={...product,variants:[v]};
+ assert.equal(stockStatus(v),'out_of_stock');
+ assert.equal(canEnquire(v),false);
+ assert.equal(isDeal(p,now),false);
+ assert.equal(filterProducts([p],{available:true},now).length,0);
+ assert.match(enquiryMessage(p,v,'https://example.test',now),/restocking/);
+ const available:Variant={...v,id:'available',availability:'in_stock',stock:0,priceMinor:9000000};
+ assert.equal(displayVariant({...p,variants:[v,available]},now).id,'available');
+});
+test('legacy unconfirmed inventory is never silently marked in stock',()=>{
+ assert.equal(stockStatus({...variant,stock:0,availabilityUnconfirmed:true}),'unconfirmed');
+ assert.equal(isInStock({...variant,stock:0,availabilityUnconfirmed:true}),false);
 });

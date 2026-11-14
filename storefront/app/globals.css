@@ -18,3 +18,9 @@ html{scrollbar-gutter:stable}body:has(dialog[open]){overflow:hidden}.icon-button
 
 /* Catalog photography is absent from the client workbook. */
 .photo-pending{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;width:100%;height:100%;min-height:180px;background:#f2efe8;color:#675d48;letter-spacing:.15em;text-align:center}.photo-pending small{font-size:11px;letter-spacing:.04em;color:#777}.brand-hero{background:radial-gradient(ellipse at 85% 30%,#675737 0, #292720 35%,#171917 75%)}.text-category{min-height:210px;background:#eee9df}.text-category>div{position:relative;padding:32px;color:#26251f}.text-category:nth-child(2){background:#e5dfd1}.text-category:nth-child(3){background:#ddd5c3}
+
+/* Stock chips stay visible alongside discount badges. */
+.stock-chip{display:inline-flex;align-items:center;gap:6px;width:fit-content;padding:5px 9px;border-radius:30px;font-size:11px;line-height:1.35;font-weight:600;white-space:nowrap;background:#f2eee5;color:#705a2e}
+.stock-chip>span{width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0}
+.stock-chip.in_stock{background:#edf4ee;color:#315c3a}.stock-chip.out_of_stock{background:#f7eeee;color:#884646}
+.product-copy>.stock-chip{margin:9px 0 2px}.product-info>.stock-chip{margin:0 0 16px}
