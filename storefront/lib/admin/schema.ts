@@ -36,8 +36,9 @@ export const variantSchema = z
     id: text(80),
     colour: text(60),
     swatch: z.string().regex(/^#[a-fA-F0-9]{6}$/),
-    image: imageSchema,
+    image: imageSchema.or(z.literal("")),
     priceMinor: money,
+    availabilityUnconfirmed: z.boolean().optional(),
     stock: z.number().int().min(0).max(1_000_000),
     sale: saleSchema.optional(),
   })
@@ -67,7 +68,7 @@ export const productSchema = z
       ),
     brand: text(60),
     name: text(),
-    gender: z.enum(["Men", "Women", "Unisex"]),
+    gender: z.enum(["Men", "Women", "Unisex", "Unspecified"]),
     style: text(60),
     movement: text(60),
     strap: text(100),
@@ -153,9 +154,9 @@ export type ContentRecord<T> = {
 export const defaultSettings: StoreSettings = {
   whatsapp: "",
   announcement: "Good watches. Great moments.",
-  announcementLabel: "Explore the deals",
-  announcementLink: "/deals/",
-  previewMode: true,
+  announcementLabel: "Explore watches",
+  announcementLink: "/watches/",
+  previewMode: false,
 };
 export function activeBanner(
   banners: Banner[],

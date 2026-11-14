@@ -61,7 +61,7 @@ function newVariant(): Variant {
     id: crypto.randomUUID(),
     colour: "Black",
     swatch: "#242120",
-    image: "/images/steel.png",
+    image: "",
     priceMinor: 0,
     stock: 0,
   };
@@ -87,7 +87,7 @@ function newBanner(): Banner {
     eyebrow: "THE SOORA & CO. EDIT",
     heading: "Something worth a closer look.",
     description: "Explore the collection.",
-    image: "/images/hero.png",
+    image: "",
     alt: "Watch collection",
     link: "/watches/",
     label: "Explore watches",
@@ -449,7 +449,7 @@ export default function Dashboard({
         <div className="admin-content">
           {demo ? (
             <div className="admin-preview-notice">
-              <span>Preview workspace</span> Explore the screens with sample
+              <span>Preview workspace</span> Explore the screens with imported
               inventory. Saving and uploads are disabled.
               <Link href="/admin/">
                 Setup status <ArrowRight size={14} />
@@ -458,7 +458,7 @@ export default function Dashboard({
           ) : !live ? (
             <div className="admin-preview-notice">
               <span>Content preparation</span>The public website still uses
-              sample inventory. Switch CATALOG_SOURCE to database after content
+              the imported catalog snapshot. Switch CATALOG_SOURCE to database after content
               review.
             </div>
           ) : null}
@@ -561,7 +561,7 @@ export default function Dashboard({
                     <br />a fresh perspective.
                   </h2>
                   <WatchImage
-                    src={banners[0]?.data.image || "/images/hero.png"}
+                    src={banners[0]?.data.image || ""}
                     alt="Campaign artwork"
                   />
                   <p>
@@ -811,7 +811,7 @@ export default function Dashboard({
                       }))
                     }
                   />
-                  Show sample-content notices
+                  Show preview notices
                 </label>
                 <p className="admin-note">
                   Turn this off only after replacing sample photographs,
@@ -1026,7 +1026,7 @@ export default function Dashboard({
                       })
                     }
                   >
-                    {["Men", "Women", "Unisex"].map((g) => (
+                    {["Men", "Women", "Unisex", "Unspecified"].map((g) => (
                       <option key={g}>{g}</option>
                     ))}
                   </select>
@@ -1147,7 +1147,7 @@ export default function Dashboard({
                       />
                     </label>
                     <label>
-                      Units in stock
+                      Units in stock (admin only)
                       <input
                         type="number"
                         min="0"
@@ -1161,6 +1161,7 @@ export default function Dashboard({
                       />
                     </label>
                   </div>
+                  <label className="admin-checkbox"><input type="checkbox" checked={!!variant.availabilityUnconfirmed} onChange={e=>changeVariant(index,{availabilityUnconfirmed:e.target.checked})}/>Ask customers to confirm availability</label>
                   <label className="admin-checkbox">
                     <input
                       type="checkbox"

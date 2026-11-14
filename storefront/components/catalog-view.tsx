@@ -36,8 +36,8 @@ export default function CatalogView({products,brands,dealsOnly=false,searchPage=
   const title=dealsOnly?'Deals':fixedBrand||fixedGender|| (searchPage?'Search':'All watches');
   return <>
     {banner?<Campaign banner={banner}/>:<section className={'collection-hero'+(dealsOnly?' sale-hero':intro?' curated-hero':'')}>
-      {dealsOnly&&<WatchImage src="/images/hero.png" alt="" sizes="100vw" priority/>}
-      <div className="wrap"><div className="collection-intro"><span className="eyebrow">{dealsOnly?'THE SOORA & CO. EDIT':fixedBrand?'THE BRAND COLLECTION':searchPage?'FIND YOUR FAVOURITE':'FIND SOMETHING THAT FEELS LIKE YOU'}</span><h1>{dealsOnly?<>Good watches.<br/>Better prices.</>:intro?.heading|| (searchPage?'What catches your eye?':'Your next everyday.')}</h1><p>{dealsOnly?'A closer look at our current offers.':intro?.description|| (searchPage?'Search by brand, model, reference or style.':'Explore the collection. Find your kind of time.')}</p></div>{intro&&<WatchImage className="collection-image" src={intro.image} alt="" sizes="(max-width:600px) 35vw, 25vw" priority/>}</div>
+
+      <div className="wrap"><div className="collection-intro"><span className="eyebrow">{dealsOnly?'THE SOORA & CO. EDIT':fixedBrand?'THE BRAND COLLECTION':searchPage?'FIND YOUR FAVOURITE':'FIND SOMETHING THAT FEELS LIKE YOU'}</span><h1>{dealsOnly?<>Good watches.<br/>Better prices.</>:intro?.heading|| (searchPage?'What catches your eye?':'Your next everyday.')}</h1><p>{dealsOnly?'A closer look at our current offers.':intro?.description|| (searchPage?'Search by brand, model, reference or style.':'Explore the collection. Find your kind of time.')}</p></div>{intro?.image&&<WatchImage className="collection-image" src={intro.image} alt="" sizes="(max-width:600px) 35vw, 25vw" priority/>}</div>
     </section>}
     <section className="wrap catalog-section">
       <div className="breadcrumb"><Link href="/">Home</Link><span>/</span>{fixedBrand&&<><Link href="/brands/">Brands</Link><span>/</span></>}{fixedGender&&<><Link href="/watches/">All watches</Link><span>/</span></>}<span>{title}</span></div>

@@ -6,7 +6,7 @@
     "dev": "node node_modules/next/dist/bin/next dev --hostname 127.0.0.1",
     "build": "node node_modules/next/dist/bin/next build",
     "typecheck": "node node_modules/typescript/bin/tsc --noEmit",
-    "test": "node --experimental-strip-types --test tests/catalog.test.ts tests/admin.test.ts",
+    "test": "node --experimental-strip-types --test tests/catalog.test.ts tests/admin.test.ts tests/inventory.test.ts",
     "images": "node scripts/prepare-images.mjs",
     "build:server": "node scripts/build-server.mjs",
     "db:setup": "node --env-file=.env.local scripts/setup-db.mjs",

@@ -2,6 +2,7 @@ import type { ImgHTMLAttributes } from 'react';
 
 type Props = ImgHTMLAttributes<HTMLImageElement> & {src: string; priority?: boolean};
 export function WatchImage({src, priority = false, sizes, ...props}: Props) {
+  if (!src) return <span className="photo-pending" role="img" aria-label="Product photo not yet available"><span>SOORA & CO.</span><small>Photo coming soon</small></span>;
   const name = src.match(/^\/images\/(hero|steel|dress|digital|leather)\.png$/)?.[1];
   if (!name) return <img src={src} {...props}/>;
   const widths = name === 'hero' ? [640, 1280, 1920] : [320, 640, 960];

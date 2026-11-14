@@ -20,7 +20,7 @@ export default function ImageField({
     <div className="admin-image-field">
       <span className="admin-field-label">{label}</span>
       <div className="admin-image-controls">
-        <img src={value || "/images/hero.png"} alt="Selected artwork" />
+        {value ? <img src={value} alt="Selected artwork" /> : <span>No image uploaded</span>}
         <div>
           <label className="admin-secondary upload-label">
             <Upload size={16} />

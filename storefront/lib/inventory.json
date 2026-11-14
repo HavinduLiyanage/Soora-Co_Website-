@@ -1,0 +1,876 @@
+[
+  {
+    "id": "AE-1200WHD-1AVDF",
+    "slug": "casio-ae-1200whd-1avdf",
+    "brand": "Casio",
+    "name": "AE-1200WHD-1AVDF",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio AE-1200WHD-1AVDF. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": true,
+    "variants": [
+      {
+        "id": "ae-1200whd-1avdf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 1795000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "A130WE-1ADF",
+    "slug": "casio-a130we-1adf",
+    "brand": "Casio",
+    "name": "A130WE-1ADF",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio A130WE-1ADF. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "a130we-1adf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 2275000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "A130WE-7ADF",
+    "slug": "casio-a130we-7adf",
+    "brand": "Casio",
+    "name": "A130WE-7ADF",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio A130WE-7ADF. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "a130we-7adf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 2275000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "A159W-N1DF",
+    "slug": "casio-a159w-n1df",
+    "brand": "Casio",
+    "name": "A159W-N1DF",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio A159W-N1DF. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "a159w-n1df",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 1050000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "A159WGEA-1DF",
+    "slug": "casio-a159wgea-1df",
+    "brand": "Casio",
+    "name": "A159WGEA-1DF",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio A159WGEA-1DF. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "a159wgea-1df",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 1895000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "A168WA-3AYDF",
+    "slug": "casio-a168wa-3aydf",
+    "brand": "Casio",
+    "name": "A168WA-3AYDF Vintage Digital Stainless Steel Watch",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Stainless steel",
+    "description": "Casio A168WA-3AYDF Vintage Digital Stainless Steel Watch. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": true,
+    "variants": [
+      {
+        "id": "a168wa-3aydf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 1195000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "A168WA-8A",
+    "slug": "casio-a168wa-8a",
+    "brand": "Casio",
+    "name": "A168WA-8A",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio A168WA-8A. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "a168wa-8a",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 1195000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "A168WEGB-1BDF",
+    "slug": "casio-a168wegb-1bdf",
+    "brand": "Casio",
+    "name": "A168WEGB-1BDF",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio A168WEGB-1BDF. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "a168wegb-1bdf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 2395000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "A168WG-9WDF",
+    "slug": "casio-a168wg-9wdf",
+    "brand": "Casio",
+    "name": "A168WG-9WDF",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio A168WG-9WDF. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "a168wg-9wdf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 1975000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "A168WGG-1B",
+    "slug": "casio-a168wgg-1b",
+    "brand": "Casio",
+    "name": "A168WGG-1B",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio A168WGG-1B. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "a168wgg-1b",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 2275000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "A178WA-1ADF",
+    "slug": "casio-a178wa-1adf",
+    "brand": "Casio",
+    "name": "A178WA-1ADF",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio A178WA-1ADF. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "a178wa-1adf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 1175000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "AE-1000W-1AVDF",
+    "slug": "casio-ae-1000w-1avdf",
+    "brand": "Casio",
+    "name": "AE-1000W-1AVDF",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio AE-1000W-1AVDF. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "ae-1000w-1avdf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 1195000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "AE-1000W-2AVDF",
+    "slug": "casio-ae-1000w-2avdf",
+    "brand": "Casio",
+    "name": "AE-1000W-2AVDF Men's Digital Watch",
+    "gender": "Men",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio AE-1000W-2AVDF Men's Digital Watch. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "ae-1000w-2avdf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 1195000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "AE-1000W-4AVDF",
+    "slug": "casio-ae-1000w-4avdf",
+    "brand": "Casio",
+    "name": "AE-1000W-4AVDF",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio AE-1000W-4AVDF. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "ae-1000w-4avdf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 1195000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "AE-1000W-5AVDF",
+    "slug": "casio-ae-1000w-5avdf",
+    "brand": "Casio",
+    "name": "AE-1000W-5AVDF Digital World Time Watch",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio AE-1000W-5AVDF Digital World Time Watch. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "ae-1000w-5avdf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 1195000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "AE-1000WD-1AVDF",
+    "slug": "casio-ae-1000wd-1avdf",
+    "brand": "Casio",
+    "name": "AE-1000WD-1AVDF",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio AE-1000WD-1AVDF. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "ae-1000wd-1avdf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 1595000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "AE-1100W-1BVDF",
+    "slug": "casio-ae-1100w-1bvdf",
+    "brand": "Casio",
+    "name": "AE-1100W-1BVDF",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio AE-1100W-1BVDF. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "ae-1100w-1bvdf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 1175000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "AE-1200WHB-1BVDF",
+    "slug": "casio-ae-1200whb-1bvdf",
+    "brand": "Casio",
+    "name": "AE-1200WHB-1BVDF",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio AE-1200WHB-1BVDF. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "ae-1200whb-1bvdf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 1595000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "AE-1200WHL-5AV",
+    "slug": "casio-ae-1200whl-5av",
+    "brand": "Casio",
+    "name": "AE-1200WHL-5AV",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio AE-1200WHL-5AV. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "ae-1200whl-5av",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 2275000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "AEQ-110W-3AVDF",
+    "slug": "casio-aeq-110w-3avdf",
+    "brand": "Casio",
+    "name": "AEQ-110W-3AVDF",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio AEQ-110W-3AVDF. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "aeq-110w-3avdf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 1895000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "AEQ-120W-1AVDF",
+    "slug": "casio-aeq-120w-1avdf",
+    "brand": "Casio",
+    "name": "AEQ-120W-1AVDF",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio AEQ-120W-1AVDF. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "aeq-120w-1avdf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 1795000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "AMW-870-1AVDF",
+    "slug": "casio-amw-870-1avdf",
+    "brand": "Casio",
+    "name": "AMW-870-1AVDF",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio AMW-870-1AVDF. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "amw-870-1avdf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 2975000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "AMW-870DA-3AVDF",
+    "slug": "casio-amw-870da-3avdf",
+    "brand": "Casio",
+    "name": "AMW-870DA-3AVDF Combination Green Dial Stainless Steel Watch",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Stainless steel",
+    "description": "Casio AMW-870DA-3AVDF Combination Green Dial Stainless Steel Watch. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "amw-870da-3avdf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 3075000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "AMW-880D-1AVDF",
+    "slug": "casio-amw-880d-1avdf",
+    "brand": "Casio",
+    "name": "AMW-880D-1AVDF Combination Digital-Analog Men's Watch",
+    "gender": "Men",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio AMW-880D-1AVDF Combination Digital-Analog Men's Watch. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "amw-880d-1avdf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 2950000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "AQ-230A-1DMQ",
+    "slug": "casio-aq-230a-1dmq",
+    "brand": "Casio",
+    "name": "AQ-230A-1DMQ Vintage Analog & Digital Watch",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio AQ-230A-1DMQ Vintage Analog & Digital Watch. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "aq-230a-1dmq",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 1495000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "AQ-230A-4AMQYDF",
+    "slug": "casio-aq-230a-4amqydf",
+    "brand": "Casio",
+    "name": "AQ-230A-4AMQYDF",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio AQ-230A-4AMQYDF. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "aq-230a-4amqydf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 1495000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "AEQ-120W-7AVDF",
+    "slug": "casio-aeq-120w-7avdf",
+    "brand": "Casio",
+    "name": "AEQ-120W-7AVDF Analog-Digital Watch",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio AEQ-120W-7AVDF Analog-Digital Watch. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "aeq-120w-7avdf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 1795000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "AEQ-120W-9AVDF",
+    "slug": "casio-aeq-120w-9avdf",
+    "brand": "Casio",
+    "name": "AEQ-120W-9AVDF",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio AEQ-120W-9AVDF. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "aeq-120w-9avdf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 1795000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "AMW-870A-2AVDF",
+    "slug": "casio-amw-870a-2avdf",
+    "brand": "Casio",
+    "name": "AMW-870A-2AVDF Ana-Digi Stainless Steel Men's Watch",
+    "gender": "Men",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Stainless steel",
+    "description": "Casio AMW-870A-2AVDF Ana-Digi Stainless Steel Men's Watch. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "amw-870a-2avdf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 2975000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "F-91WM-3A",
+    "slug": "casio-f-91wm-3a",
+    "brand": "Casio",
+    "name": "F-91WM-3A Essential Classic Digital Watch",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio F-91WM-3A Essential Classic Digital Watch. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "f-91wm-3a",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 635000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "F-91W-3DG",
+    "slug": "casio-f-91w-3dg",
+    "brand": "Casio",
+    "name": "F-91W-3DG Vintage Resin Digital Watch",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Resin",
+    "description": "Casio F-91W-3DG Vintage Resin Digital Watch. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "f-91w-3dg",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 695000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "F-91WG-9QDF",
+    "slug": "casio-f-91wg-9qdf",
+    "brand": "Casio",
+    "name": "F-91WG-9QDF Vintage Resin Digital Watch",
+    "gender": "Unspecified",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Resin",
+    "description": "Casio F-91WG-9QDF Vintage Resin Digital Watch. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "f-91wg-9qdf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 695000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "SBTR029",
+    "slug": "seiko-sbtr029",
+    "brand": "Seiko",
+    "name": "Spirit SBTR029 Chronograph Men's Quartz Watch",
+    "gender": "Men",
+    "style": "Chronograph",
+    "movement": "Quartz",
+    "strap": "Not specified",
+    "description": "Seiko Spirit SBTR029 Chronograph Men's Quartz Watch. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": true,
+    "variants": [
+      {
+        "id": "sbtr029",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 10000000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "SBTR013",
+    "slug": "seiko-sbtr013",
+    "brand": "Seiko",
+    "name": "SBTR013 Spirit Black Dial Quartz Chronograph Men's Watch",
+    "gender": "Men",
+    "style": "Chronograph",
+    "movement": "Quartz",
+    "strap": "Not specified",
+    "description": "Seiko SBTR013 Spirit Black Dial Quartz Chronograph Men's Watch. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "sbtr013",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 10000000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "SBTR011",
+    "slug": "seiko-sbtr011",
+    "brand": "Seiko",
+    "name": "Spirit SBTR011 Quartz Chronograph Men's Watch",
+    "gender": "Men",
+    "style": "Chronograph",
+    "movement": "Quartz",
+    "strap": "Not specified",
+    "description": "Seiko Spirit SBTR011 Quartz Chronograph Men's Watch. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "sbtr011",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 10000000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "EQS-920DB-1BVUDF",
+    "slug": "casio-eqs-920db-1bvudf",
+    "brand": "Casio",
+    "name": "Edifice EQS-920DB-1BVUDF Solar Chronograph Watch",
+    "gender": "Unspecified",
+    "style": "Chronograph",
+    "movement": "Not specified",
+    "strap": "Not specified",
+    "description": "Casio Edifice EQS-920DB-1BVUDF Solar Chronograph Watch. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": true,
+    "variants": [
+      {
+        "id": "eqs-920db-1bvudf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 10000000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "EFV-C100D-1AVDF",
+    "slug": "casio-efv-c100d-1avdf",
+    "brand": "Casio",
+    "name": "Edifice EFV-C100D-1AVDF Ana-Digi Stainless Steel Men's Watch",
+    "gender": "Men",
+    "style": "Not specified",
+    "movement": "Not specified",
+    "strap": "Stainless steel",
+    "description": "Casio Edifice EFV-C100D-1AVDF Ana-Digi Stainless Steel Men's Watch. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "efv-c100d-1avdf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 10000000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  },
+  {
+    "id": "EFV-650CL-5AVUDF",
+    "slug": "casio-efv-650cl-5avudf",
+    "brand": "Casio",
+    "name": "Edifice EFV-650CL-5AVUDF Leather Chronograph Men's Watch",
+    "gender": "Men",
+    "style": "Chronograph",
+    "movement": "Not specified",
+    "strap": "Leather",
+    "description": "Casio Edifice EFV-650CL-5AVUDF Leather Chronograph Men's Watch. Contact Soora & Co. to confirm availability and full specifications.",
+    "featured": false,
+    "variants": [
+      {
+        "id": "efv-650cl-5avudf",
+        "colour": "Not specified",
+        "swatch": "#bca36b",
+        "image": "",
+        "priceMinor": 10000000,
+        "stock": 0,
+        "availabilityUnconfirmed": true
+      }
+    ]
+  }
+]

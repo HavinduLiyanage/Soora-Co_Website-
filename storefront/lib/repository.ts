@@ -1,6 +1,7 @@
 import 'server-only';
 import { cache } from 'react';
-import { products } from './fixtures';
+import inventory from './inventory.json';
+const products = inventory as Product[];
 import { db } from './server/db';
 import { defaultSettings, activeBanner, type Banner, type StoreSettings } from './admin/schema';
 import type { Product } from './catalog';

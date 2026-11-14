@@ -1,6 +1,6 @@
-export type Gender = 'Men' | 'Women' | 'Unisex';
+export type Gender = 'Men' | 'Women' | 'Unisex' | 'Unspecified';
 export type Sale = { priceMinor: number; startsAt: string; endsAt: string };
-export type Variant = { id: string; colour: string; swatch: string; image: string; priceMinor: number; stock: number; sale?: Sale };
+export type Variant = { id: string; colour: string; swatch: string; image: string; priceMinor: number; stock: number; availabilityUnconfirmed?: boolean; sale?: Sale };
 export type Product = { id: string; slug: string; brand: string; name: string; gender: Gender; style: string; movement: string; strap: string; description: string; variants: Variant[]; featured?: boolean };
 export function priceOf(variant: Variant, at = new Date()) {
   const sale = variant.sale;
@@ -52,5 +52,5 @@ export function catalogUrl(path: string, values: Record<string, string | boolean
   return path + (params.size ? '?' + params.toString() : '');
 }
 export function enquiryMessage(product: Product, variant: Variant, origin: string, at = new Date()) {
-  return `Hi Soora & Co., ${variant.stock > 0 ? "I'm interested in" : "I'd like to ask about restocking"} the ${product.brand} ${product.name}.\nReference: ${product.id}\nDial: ${variant.colour}\nDisplayed price: ${money(priceOf(variant, at).current)}\n${origin}/watches/${product.slug}/\nCould you confirm availability and details?`;
+  return `Hi Soora & Co., ${variant.availabilityUnconfirmed || variant.stock > 0 ? "I'm interested in" : "I'd like to ask about restocking"} the ${product.brand} ${product.name}.\nReference: ${product.id}\nDial: ${variant.colour}\nDisplayed price: ${money(priceOf(variant, at).current)}\n${origin}/watches/${product.slug}/\nCould you confirm availability and details?`;
 }
