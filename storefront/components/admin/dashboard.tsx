@@ -202,7 +202,7 @@ export default function Dashboard({
     if (
       (action === "unpublish" || action === "archive") &&
       !window.confirm(
-        `${action === "archive" ? "Archive" : "Unpublish"} this item? It will be removed from the storefront.`,
+        `${action === "archive" && productEdit ? "Delete " + productEdit.data.brand + " " + productEdit.data.name : action === "archive" ? "Archive this item" : "Unpublish this item"}? It will be removed from the storefront.${action === "archive" && productEdit ? " You can restore it from Deleted. Images will be kept." : ""}`,
       )
     )
       return;
@@ -243,7 +243,7 @@ export default function Dashboard({
           : action === "save"
             ? "Draft saved. The published version has not changed."
             : action === "archive"
-              ? "Archived. You can republish it later."
+              ? productEdit ? "Deleted. You can restore this watch from Deleted." : "Archived. You can republish it later."
               : "Unpublished. This item is now a draft.",
       );
       setDirty(false);
@@ -254,6 +254,20 @@ export default function Dashboard({
     } finally {
       setBusy(false);
     }
+  }
+  async function removeOrRestore(record: ContentRecord<Product>) {
+    if (busy || demo) return;
+    const restore=record.status==='archived';
+    if(!restore && !window.confirm('Delete '+record.data.brand+' '+record.data.name+' ('+record.data.id+')?\n\nThis removes it from the website and active inventory. You can restore it from Deleted. Images will be kept.')) return;
+    setBusy(true);setError('');setNotice('');
+    try {
+      const response=await fetch('/api/admin/products/',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({recordId:record.id,expectedVersion:record.version,action:restore?'unpublish':'archive',data:record.data})});
+      const updated=await response.json();
+      if(!response.ok)throw new Error(updated.error);
+      setProducts(list=>list.map(p=>p.id===updated.id?updated:p));
+      setNotice(restore?'Restored as a draft. Open the watch and publish when ready.':'Watch deleted from the website. Restore it anytime from Deleted.');
+    }catch(e){setError(e instanceof Error?e.message:'Unable to update this watch.');}
+    finally{setBusy(false);}
   }
   async function quickStock(record: ContentRecord<Product>, availability: "in_stock" | "out_of_stock") {
     if (busy || demo) return;
@@ -282,7 +296,7 @@ export default function Dashboard({
   };
   const filtered = products.filter(
     (p) =>
-      (status === "all" || p.status === status) &&
+      (status === "all" ? p.status !== "archived" : p.status === status) &&
       `${p.data.brand} ${p.data.name} ${p.data.id}`
         .toLowerCase()
         .includes(query.toLowerCase()) &&
@@ -359,7 +373,7 @@ export default function Dashboard({
                   </td>
                   <td>
                     <span className={"admin-pill " + record.status}>
-                      {record.status}
+                      {record.status === "archived" ? "Deleted" : record.status}
                     </span>
                     {record.published_data &&
                       JSON.stringify(record.data) !==
@@ -375,6 +389,7 @@ export default function Dashboard({
                     >
                       <ChevronRight size={19} />
                     </button>
+                    <button className="admin-delete-watch" type="button" disabled={busy || demo} onClick={()=>removeOrRestore(record)} aria-label={(record.status==='archived'?'Restore ':'Delete ')+p.brand+' '+p.name}>{record.status==='archived'?'Restore':<><Trash2 size={14}/>Delete</>}</button>
                   </td>
                 </tr>
               );
@@ -422,7 +437,7 @@ export default function Dashboard({
             >
               <item.icon size={19} />
               {item.label}
-              {item.id === "inventory" && <span>{products.length}</span>}
+              {item.id === "inventory" && <span>{products.filter(p=>p.status!=="archived").length}</span>}
             </button>
           ))}
         </nav>
@@ -630,7 +645,7 @@ export default function Dashboard({
                         key={s}
                         onClick={() => setStatus(s)}
                       >
-                        {s === "all" ? "All watches" : s}
+                        {s === "all" ? "All watches" : s === "archived" ? "Deleted" : s}
                       </button>
                     ))}
                   </div>
@@ -1494,7 +1509,7 @@ export default function Dashboard({
                   disabled={demo || busy || uploading}
                   onClick={() => save("archive")}
                 >
-                  Archive
+                  {productEdit ? "Delete watch" : "Archive"}
                 </button>
               </>
             )}

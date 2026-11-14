@@ -1541,3 +1541,5 @@
 .admin-quick-stock button[aria-pressed=true]{background:#282722;color:white;border-color:#282722}
 .admin-quick-stock button:disabled{opacity:.5;cursor:default}.admin-quick-stock small{flex-basis:100%;font-size:10px}
 .admin-quick-stock button:focus-visible{outline:2px solid #a7862e;outline-offset:2px}
+
+.admin-delete-watch{display:inline-flex;align-items:center;gap:5px;border:0;background:none;color:#884646;font:inherit;font-size:11px;padding:8px;cursor:pointer}.admin-delete-watch:disabled{opacity:.5;cursor:default}.admin-delete-watch:focus-visible{outline:2px solid #a7862e;outline-offset:2px}
