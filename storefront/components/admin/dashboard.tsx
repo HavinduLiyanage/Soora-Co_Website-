@@ -1519,7 +1519,7 @@ export default function Dashboard({
             disabled={demo || busy || uploading}
             onClick={() => save("save")}
           >
-            Save draft
+            {productEdit?.record?.status === "archived" ? "Restore as draft" : "Save draft"}
           </button>
           <button
             className="admin-primary"

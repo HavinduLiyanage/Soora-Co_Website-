@@ -211,6 +211,19 @@ try {
   );
   passed++;
   console.log("PASS deals page uses published data");
+
+  for (const availability of ['out_of_stock','in_stock']) {
+    const stockResponse=await fetch(origin+'/api/admin/products/',{method:'PATCH',headers:{Cookie:cookie,Origin:origin,'Content-Type':'application/json'},body:JSON.stringify({recordId:record.id,expectedVersion:record.version,availability})});
+    check(stockResponse.status,200,'quick stock '+availability);
+    record=await stockResponse.json();
+    const publicWatch=await (await request('/api/catalog/qa-integration-watch/')).json();
+    check(publicWatch.product.variants[0].availability,availability,'public stock updates');
+    check((await (await request('/deals/')).text()).includes('href="/watches/qa-integration-watch/"'),availability==='in_stock','Deals follows stock toggle');
+  }
+  const wrongPassword=await request('/api/auth/change-password',{currentPassword:'wrong-password-value',newPassword:process.env.SOORA_OWNER_PASSWORD});
+  check(wrongPassword.status,400,'wrong current password rejected');
+  const passwordChange=await request('/api/auth/change-password',{currentPassword:process.env.SOORA_OWNER_PASSWORD,newPassword:process.env.SOORA_OWNER_PASSWORD,revokeOtherSessions:false});
+  check(passwordChange.status,200,'password change endpoint accepts valid owner credentials');
   const campaign = {
     title: "QA campaign",
     eyebrow: "QA",
@@ -283,6 +296,12 @@ try {
     404,
     "archive removes public access",
   );
+
+  record=await response.json();
+  const restoredResponse=await request('/api/admin/products/',{recordId:record.id,expectedVersion:record.version,action:'unpublish',data:record.data});
+  check(restoredResponse.status,200,'restore deleted watch');
+  const restored=await restoredResponse.json();check(restored.status,'draft','restoration remains private draft');
+  check((await request('/api/catalog/qa-integration-watch/')).status,404,'restored draft is not public');
   check(
     (await request("/api/auth/sign-out", {})).status,
     200,

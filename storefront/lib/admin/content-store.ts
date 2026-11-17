@@ -75,7 +75,7 @@ export async function saveContent(
   const { rows } = await query(
     `update ${table} set data=$1,
     published_data=case when $2='publish' then $1::jsonb when $2 in ('unpublish','archive') then null else published_data end,
-    status=case when $2='save' then status else $3 end, version=version+1,updated_at=now(),updated_by=$4
+    status=case when $2='save' and status <> 'archived' then status else $3 end, version=version+1,updated_at=now(),updated_by=$4
     where id=$5 and version=$6 ${collection === "products" ? "and data->>'slug'=$1::jsonb->>'slug'" : ""}
     returning id,data,published_data,status,version,updated_at`,
     [payload, action, status, actor, recordId, expectedVersion],

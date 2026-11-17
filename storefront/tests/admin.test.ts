@@ -292,7 +292,7 @@ test("PostgreSQL publication, atomic revisions, audit and archival work end to e
       "select count(*)::int as count from store_audit",
     );
     assert.equal(audit.rows[0].count, 6);
-    const restored = await saveContent(query, "products", {recordId: archived.id, expectedVersion: archived.version, action: "unpublish", data: archived.data}, "owner-test");
+    const restored = await saveContent(query, "products", {recordId: archived.id, expectedVersion: archived.version, action: "save", data: archived.data}, "owner-test");
     assert.equal(restored.status, "draft");
     assert.equal(restored.published_data, null);
     assert.deepEqual(restored.data, archived.data);
