@@ -132,6 +132,23 @@ export default function Dashboard({
     if (active) setDirty(true);
   };
   const editor = useRef<HTMLDialogElement>(null);
+  const confirmation = useRef<HTMLDialogElement>(null);
+  const [confirmationText, setConfirmationText] = useState("");
+  const confirmationResolve = useRef<((answer: boolean) => void) | null>(null);
+  const askConfirmation = (message: string) => new Promise<boolean>(resolve => {
+    if (confirmationResolve.current) { resolve(false); return; }
+    confirmationResolve.current = resolve;
+    setConfirmationText(message);
+  });
+  const answerConfirmation = (answer: boolean) => {
+    const resolve = confirmationResolve.current;
+    confirmationResolve.current = null;
+    confirmation.current?.close();
+    setConfirmationText("");
+    resolve?.(answer);
+  };
+  useEffect(() => { if (confirmationText) confirmation.current?.showModal(); }, [confirmationText]);
+  useEffect(() => () => { confirmationResolve.current?.(false); }, []);
   useEffect(() => {
     if (productEdit || bannerEdit) editor.current?.showModal();
     else editor.current?.close();
@@ -153,9 +170,9 @@ export default function Dashboard({
   const low = products.filter(
     (p) => p.status !== "archived" && p.data.variants.some((v) => !isInStock(v)),
   );
-  const close = () => {
+  const close = async () => {
     if (busy || uploading) return;
-    if (dirty && !window.confirm("Discard your unsaved changes?")) return;
+    if (dirty && !await askConfirmation("Discard your unsaved changes?")) return;
     setProductEdit(null);
     setBannerEdit(null);
     setDirty(false);
@@ -201,7 +218,7 @@ export default function Dashboard({
     if (!editing) return;
     if (
       (action === "unpublish" || action === "archive") &&
-      !window.confirm(
+      !await askConfirmation(
         `${action === "archive" && productEdit ? "Delete " + productEdit.data.brand + " " + productEdit.data.name : action === "archive" ? "Archive this item" : "Unpublish this item"}? It will be removed from the storefront.${action === "archive" && productEdit ? " You can restore it from Deleted. Images will be kept." : ""}`,
       )
     )
@@ -258,7 +275,7 @@ export default function Dashboard({
   async function removeOrRestore(record: ContentRecord<Product>) {
     if (busy || demo) return;
     const restore=record.status==='archived';
-    if(!restore && !window.confirm('Delete '+record.data.brand+' '+record.data.name+' ('+record.data.id+')?\n\nThis removes it from the website and active inventory. You can restore it from Deleted. Images will be kept.')) return;
+    if(!restore && !await askConfirmation('Delete '+record.data.brand+' '+record.data.name+' ('+record.data.id+')?\n\nThis removes it from the website and active inventory. You can restore it from Deleted. Images will be kept.')) return;
     setBusy(true);setError('');setNotice('');
     try {
       const response=await fetch('/api/admin/products/',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({recordId:record.id,expectedVersion:record.version,action:restore?'unpublish':'archive',data:record.data})});
@@ -1144,9 +1161,9 @@ export default function Dashboard({
                         aria-label={`Remove variant ${index + 1}`}
                         disabled={uploading}
                         className="admin-text-link"
-                        onClick={() => {
+                        onClick={async () => {
                           if (
-                            window.confirm(
+                            await askConfirmation(
                               "Remove this variant from the draft?",
                             )
                           )
@@ -1276,12 +1293,12 @@ export default function Dashboard({
                         <input
                           type="datetime-local"
                           value={colomboInput(variant.sale.startsAt)}
-                          onChange={(e) => {
-                            if (e.target.value)
+                          onInput={(e) => {
+                            if (e.currentTarget.value)
                               changeVariant(index, {
                                 sale: {
                                   ...variant.sale!,
-                                  startsAt: colomboInstant(e.target.value)!,
+                                  startsAt: colomboInstant(e.currentTarget.value)!,
                                 },
                               });
                           }}
@@ -1292,12 +1309,12 @@ export default function Dashboard({
                         <input
                           type="datetime-local"
                           value={colomboInput(variant.sale.endsAt)}
-                          onChange={(e) => {
-                            if (e.target.value)
+                          onInput={(e) => {
+                            if (e.currentTarget.value)
                               changeVariant(index, {
                                 sale: {
                                   ...variant.sale!,
-                                  endsAt: colomboInstant(e.target.value)!,
+                                  endsAt: colomboInstant(e.currentTarget.value)!,
                                 },
                               });
                           }}
@@ -1377,7 +1394,7 @@ export default function Dashboard({
                 <input
                   type="checkbox"
                   disabled={uploading}
-                  checked={!!bannerEdit.data.mobileImage}
+                  checked={bannerEdit.data.mobileImage !== undefined}
                   onChange={(e) =>
                     changeBanner({
                       mobileImage: e.target.checked
@@ -1388,7 +1405,7 @@ export default function Dashboard({
                 />
                 Use separate mobile artwork
               </label>
-              {bannerEdit.data.mobileImage && (
+              {bannerEdit.data.mobileImage !== undefined && (
                 <ImageField
                     onUploadState={uploadState}
                   value={bannerEdit.data.mobileImage}
@@ -1449,8 +1466,8 @@ export default function Dashboard({
                   <input
                     type="datetime-local"
                     value={colomboInput(bannerEdit.data.startsAt)}
-                    onChange={(e) =>
-                      changeBanner({ startsAt: colomboInstant(e.target.value) })
+                    onInput={(e) =>
+                      changeBanner({ startsAt: colomboInstant(e.currentTarget.value) })
                     }
                   />
                   <small>Leave blank to start immediately.</small>
@@ -1460,8 +1477,8 @@ export default function Dashboard({
                   <input
                     type="datetime-local"
                     value={colomboInput(bannerEdit.data.endsAt)}
-                    onChange={(e) =>
-                      changeBanner({ endsAt: colomboInstant(e.target.value) })
+                    onInput={(e) =>
+                      changeBanner({ endsAt: colomboInstant(e.currentTarget.value) })
                     }
                   />
                   <small>Leave blank for no end date.</small>
@@ -1530,6 +1547,12 @@ export default function Dashboard({
             <ArrowUpRight size={16} />
           </button>
         </div>
+      </dialog>
+      <dialog ref={confirmation} className="admin-confirmation" aria-labelledby="admin-confirm-title" aria-describedby="admin-confirm-message" onCancel={e=>{e.preventDefault();answerConfirmation(false)}} onClick={e=>{if(e.target===e.currentTarget)answerConfirmation(false)}}>
+        <span className="eyebrow">PLEASE CONFIRM</span>
+        <h2 id="admin-confirm-title">Confirm this change</h2>
+        <p id="admin-confirm-message">{confirmationText}</p>
+        <div><button type="button" className="admin-secondary" autoFocus onClick={()=>answerConfirmation(false)}>Cancel</button><button type="button" className="admin-primary" onClick={()=>answerConfirmation(true)}>Confirm</button></div>
       </dialog>
     </div>
   );
