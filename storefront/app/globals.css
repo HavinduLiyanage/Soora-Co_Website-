@@ -24,3 +24,8 @@ html{scrollbar-gutter:stable}body:has(dialog[open]){overflow:hidden}.icon-button
 .stock-chip>span{width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0}
 .stock-chip.in_stock{background:#edf4ee;color:#315c3a}.stock-chip.out_of_stock{background:#f7eeee;color:#884646}
 .product-copy>.stock-chip{margin:9px 0 2px}.product-info>.stock-chip{margin:0 0 16px}
+
+/* Keep phone form text readable and avoid focus zoom in mobile browsers. */
+@media (max-width: 600px) {
+  input, select, textarea, .enquiry-dialog textarea { font-size: 16px; }
+}

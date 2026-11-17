@@ -404,6 +404,7 @@ export default function Dashboard({
                       onClick={() => editProduct(record)}
                       aria-label={`Edit ${p.brand} ${p.name}`}
                     >
+                      <span className="admin-edit-label">Edit</span>
                       <ChevronRight size={19} />
                     </button>
                     <button className="admin-delete-watch" type="button" disabled={busy || demo} onClick={()=>removeOrRestore(record)} aria-label={(record.status==='archived'?'Restore ':'Delete ')+p.brand+' '+p.name}>{record.status==='archived'?'Restore':<><Trash2 size={14}/>Delete</>}</button>

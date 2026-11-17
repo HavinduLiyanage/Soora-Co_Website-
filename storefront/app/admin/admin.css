@@ -1545,3 +1545,52 @@
 .admin-delete-watch{display:inline-flex;align-items:center;gap:5px;border:0;background:none;color:#884646;font:inherit;font-size:11px;padding:8px;cursor:pointer}.admin-delete-watch:disabled{opacity:.5;cursor:default}.admin-delete-watch:focus-visible{outline:2px solid #a7862e;outline-offset:2px}
 
 .admin-confirmation{width:min(480px,calc(100vw - 32px));border:1px solid #ded9cd;border-radius:8px;padding:28px;background:#fff;color:#282722}.admin-confirmation::backdrop{background:rgb(25 24 20 / .55)}.admin-confirmation h2{font-size:24px;margin:12px 0}.admin-confirmation p{white-space:pre-line;line-height:1.7;font-size:14px}.admin-confirmation>div{display:flex;justify-content:flex-end;gap:12px;margin-top:24px}
+
+/* Keep mobile inventory actions separate from prices and visibility. */
+@media (max-width: 520px) {
+  .admin-table tr {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 10px 12px;
+  }
+  .admin-table td { min-width: 0; padding-top: 0; }
+  .admin-table td:first-child { padding-right: 65px; }
+  .admin-product-cell > span { min-width: 0; overflow-wrap: anywhere; }
+  .admin-table td:nth-child(2) { grid-column: 1; grid-row: 2; }
+  .admin-table td:nth-child(2) > strong { font-size: 13px; white-space: nowrap; }
+  .admin-table td:nth-child(3) { grid-column: 1 / -1; grid-row: 3; }
+  .admin-table td:nth-child(4) { grid-column: 2; grid-row: 2; align-items: flex-end; text-align: right; }
+  .admin-table td:last-child { align-items: flex-end; }
+  .admin-quick-stock { min-width: 0; max-width: none; width: 100%; gap: 8px; }
+  .admin-quick-stock button { flex: 1; min-height: 44px; font-size: 12px; }
+  .admin-edit-button, .admin-delete-watch { min-height: 44px; }
+  .admin-field-grid, .admin-sale-fields { grid-template-columns: minmax(0, 1fr); }
+  .admin-field-grid > *, .admin-sale-fields > * { min-width: 0; }
+  .admin-root input[type="datetime-local"] { min-width: 0; max-width: 100%; }
+  .admin-sale-fields { padding: 12px; }
+  .admin-image-controls { flex-wrap: wrap; }
+  .admin-editor-actions { padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+  .admin-root .admin-search input { font-size: 16px !important; }
+}
+.admin-edit-label { display: none; }
+@media (max-width: 520px) {
+  .admin-table td:first-child { padding-right: 0; }
+  .admin-table td:last-child {
+    position: static;
+    grid-column: 1 / -1;
+    grid-row: 4;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    padding-top: 8px;
+    border-top: 1px solid var(--admin-border);
+  }
+  .admin-edit-label { display: inline; }
+  .admin-edit-button { width: auto; display: inline-flex; align-items: center; gap: 5px; font-size: 12px; }
+}
+@media (max-width: 520px) {
+  .admin-sale-fields { margin-inline: -16px; }
+}
+@media (max-width: 800px) {
+  .admin-mobile-logout { width: 44px; height: 44px; }
+}
